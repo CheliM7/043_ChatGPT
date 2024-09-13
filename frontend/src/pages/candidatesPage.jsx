@@ -2,12 +2,9 @@ import React from 'react';
 import CandidateTable from '../components/candidates';
 import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-// Example height of the navbar
-const NAVBAR_HEIGHT = '120px'; // Update this value based on your actual navbar height
-
-// Styled Button Component
-// Styled Button Component
+ 
+const NAVBAR_HEIGHT = '120px';  
+ 
 const Button = styled.a`
   position: fixed;
   top: calc(${NAVBAR_HEIGHT} + 20px); /* Space from the top of the viewport plus a margin */
