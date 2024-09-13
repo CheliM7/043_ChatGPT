@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 const NavBar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // Update time every second
+  
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -17,7 +17,7 @@ const NavBar = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Breakpoint for responsiveness
 
-  // Styled Components
+  
   const NavBarContainer = styled(AppBar)({
     backgroundColor: '#f8f9fa',
     color: '#000',
@@ -80,9 +80,8 @@ const NavBar = () => {
           </DateInfo>
         </ElectionInfo>
 
-        {/* Right Aligned Section */}
-        <RightSection>
-          {/* Candidates Section */}
+        
+        <RightSection> 
           <Tooltip title="View Candidates" arrow>
             <Link to="/candidates" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Box display="flex" alignItems="center" gap="10px">
@@ -91,8 +90,7 @@ const NavBar = () => {
               </Box>
             </Link>
           </Tooltip>
-
-          {/* Manifestos Section */}
+ 
           <Tooltip title="Read Manifestos" arrow>
             <Link to="/manifestos" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Box display="flex" alignItems="center" gap="10px">
@@ -101,9 +99,8 @@ const NavBar = () => {
               </Box>
             </Link>
           </Tooltip>
-
-          {/* Vote Button */}
-          <Tooltip title="Cast Your Vote" arrow>
+ 
+          <Tooltip title="Cast Your Vote in our Poll" arrow>
             <Link to="/vote" style={{ textDecoration: 'none' }}>
               <VoteButton variant="contained" startIcon={<HowToVote />}>
                 VOTE
