@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ThreeSectionContainer from '../components/threeSectionContainer';
 
 const HomePage = () => {
   return (
@@ -10,6 +11,7 @@ const HomePage = () => {
         <Button href="https://elections.gov.lk/" target="_blank" rel="noopener noreferrer">
           Visit the Election Commission Website
         </Button>
+        <ThreeSectionContainer />
       </MainContent>
     </HomePageContainer>
   );
