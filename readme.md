@@ -25,8 +25,7 @@ The frontend is built with React, and yarn as the package manager.
 
 ## Backend
 
-This is the backend component of the Real-Time Stock Price Prediction Application. It is built using Flask and serves as an API to handle requests, process CSV files, and perform stock price predictions.
-
+This is the backend component It is built using Flask and serves as an API to handle requests
 ### Installation
 
 1. Navigate to the `backend` directory:
