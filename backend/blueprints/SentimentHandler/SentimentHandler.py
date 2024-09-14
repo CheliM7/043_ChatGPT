@@ -3,9 +3,6 @@ from threading import Thread
 import time
 import random
 from pymongo import MongoClient
-from pymongo.errors import PyMongoError
-from bson.json_util import dumps
-from bson.objectid import ObjectId
 
 from .util.winCalc import calculate_weighted_vote_percentage, calculate_final_win_percentage
 
