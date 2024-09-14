@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+
 import styled from 'styled-components';
 import AKD from '../assets/AKD.jpg';
 import RW from '../assets/RW.jpg';
 import SP from '../assets/SP.jpeg';
 import ApexChart from './apexchart';
+import React, { useState, useEffect } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -193,10 +194,29 @@ const ChartContainer = styled.div`
 `;
 
 
-const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP], 
+const ThreeSectionContainer = ({ 
+  images = [AKD, RW, SP], 
   names = ["Anura Kumara Dissanayake", "Ranil Wickremesinghe", "Sajith Premadasa"], 
-  parties = ["National People's Power", "Independent", "Samagi Jana Balawegaya"] }) => {
+  parties = ["National People's Power", "Independent", "Samagi Jana Balawegaya"] 
+}) => {
   const [showInfo, setShowInfo] = useState(false);
+  const [chartData, setChartData] = useState({ akd: 0, rw: 0, sp: 0 });
+
+  useEffect(() => {
+    // Fetch data from Flask backend
+    fetch('http://127.0.0.1:5000/api/WinPrediction')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched data:', data);
+        console.log(data["Anura Kumara Dissanayake"]);
+        setChartData({
+          akd: data["Anura Kumara Dissanayake"],
+          rw: data["Ranil Wickramasinghe"],
+          sp: data["Sajith Premadasa"]
+        });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
 
   return (
     <Container>
@@ -239,7 +259,7 @@ const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP],
       </SubsectionContainer>
 
       <ChartContainer>
-      <ApexChart akd={45} rw={20} sp={15} />
+        <ApexChart akd={chartData.akd} rw={chartData.rw} sp={chartData.sp} />
       </ChartContainer>
     </Container>
   );
