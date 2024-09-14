@@ -17,10 +17,13 @@
     "@mui/icons-material": "^6.1.0",
     "@mui/material": "^6.1.0",
     "@mui/system": "^6.1.0",
+    "apexcharts": "^3.53.0",
     "date-fns": "^3.6.0",
     "react": "^18.3.1",
+    "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
+    "recharts": "^2.12.7",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
