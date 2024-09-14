@@ -27,6 +27,7 @@ const Header = styled.div`
   gap: 10px;
   margin-bottom: 20px;
 `;
+
 const Title = styled.h1`
   font-size: 24px; /* Reduced font size */
   color: #000; /* Black font for contrast */
@@ -37,7 +38,6 @@ const Title = styled.h1`
   font-weight: 600; /* Make the title bold */
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for depth */
 `;
-
 
 const InfoIcon = styled.span`
   font-size: 18px; 
@@ -68,7 +68,6 @@ const InfoText = styled.p`
   max-width: 80%; 
   text-align: center;
 `;
-
 
 const SubsectionContainer = styled.div`
   display: flex;
@@ -113,7 +112,6 @@ const YellowSubsection = styled(Subsection)`
   /* Darker yellow gradient with black transparency */
 `;
 
-
 const Image = styled.img`
   width: 150px;
   height: 150px;
@@ -122,16 +120,43 @@ const Image = styled.img`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 `;
 
-const WinScore = styled.p`
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff; /* Change to white for contrast */
+const NameAndParty = styled.div`
+  margin-top: 10px;
   font-family: 'Open Sans', sans-serif;
-  letter-spacing: 1px;
+  text-align: center;
+  color: #fff; /* White for contrast */
+
+  /* Style for the name */
+  & .name {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.2); /* Light background to highlight the name */
+    padding: 4px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  /* Style for the horizontal line */
+  & .separator {
+    width: 50px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5); /* Light separator line */
+    margin: 5px auto;
+    border-radius: 2px;
+  }
+
+  /* Style for the party */
+  & .party {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif; /* Secondary font */
+  }
 `;
 
-const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP] }) => {
+const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP], 
+  names = ["Anura Kumara Dissanayake", "Ranil Wickremesinghe", "Sajith Premadasa"], 
+  parties = ["National People's Power", "Independent", "Samagi Jana Balawegaya"] }) => {
   const [showInfo, setShowInfo] = useState(false);
 
   return (
@@ -150,15 +175,27 @@ const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP] }) =
       <SubsectionContainer>
         <RedSubsection>
           <Image src={images[0]} alt="image-1" />
-          <WinScore>Win Score: {scores[0]}</WinScore>
+          <NameAndParty>
+            <div className="name">{names[0]}</div>
+            <div className="separator"></div>
+            <div className="party">{parties[0]}</div>
+          </NameAndParty>
         </RedSubsection>
         <GreenSubsection>
           <Image src={images[1]} alt="image-2" />
-          <WinScore>Win Score: {scores[1]}</WinScore>
+          <NameAndParty>
+            <div className="name">{names[1]}</div>
+            <div className="separator"></div>
+            <div className="party">{parties[1]}</div>
+          </NameAndParty>
         </GreenSubsection>
         <YellowSubsection>
           <Image src={images[2]} alt="image-3" />
-          <WinScore>Win Score: {scores[2]}</WinScore>
+          <NameAndParty>
+            <div className="name">{names[2]}</div>
+            <div className="separator"></div>
+            <div className="party">{parties[2]}</div>
+          </NameAndParty>
         </YellowSubsection>
         <ApexChart akd={45} rw={20} sp={15} />
       </SubsectionContainer>
