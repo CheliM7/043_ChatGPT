@@ -2,6 +2,8 @@ from flask import Blueprint
 from flask import request, jsonify
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
+from bson.json_util import dumps
+from bson.objectid import ObjectId
 
 Polling_Handler = Blueprint('Polling_Handler', __name__)
 
@@ -35,10 +37,17 @@ def vote():
     except ConnectionError:
         return jsonify({'error': 'Failed to connect to MongoDB'}), 500
 
+
 @Polling_Handler.route('/api/polling/candidates', methods=['GET'])
 def get_candidates():
     try:
         candidates = collection.find()
-        return jsonify(list(candidates))
+        # Convert the cursor to a list and remove the '_id' field from each document
+        candidates_list = []
+        for candidate in candidates:
+            candidate_copy = candidate.copy()  # Create a copy of the document
+            candidate_copy.pop('_id', None)  # Remove the '_id' field
+            candidates_list.append(candidate_copy)
+        return jsonify(candidates_list)
     except ConnectionError:
         return jsonify({'error': 'Failed to connect to MongoDB'}), 500
