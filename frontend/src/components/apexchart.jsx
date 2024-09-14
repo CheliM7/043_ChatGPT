@@ -6,14 +6,14 @@ class ApexChart extends React.Component {
     super(props);
 
     this.state = {
-      series: [45, 35, 15, 5], // Default values
+      series: [props.akd || 0, props.rw || 0, props.sp || 0], // Initialize with props
       options: {
         chart: {
           width: 380,
           type: 'donut',
         },
-        labels: ['AKD', 'RW', 'SP', 'OTHER'], // Labels for the sections
-        colors: ['#C62828', '#2C6B2F', '#FBC02D', 'rgba(0, 0, 0, 0.5)'], // Darker red, green, yellow, transparent black
+        labels: ['AKD', 'RW', 'SP'], // Labels for the sections
+        colors: ['#C62828', '#2C6B2F', '#FBC02D'], // Darker red, green, yellow
         dataLabels: {
           enabled: false
         },
@@ -34,41 +34,18 @@ class ApexChart extends React.Component {
           height: 230,
         }
       },
-      
-      
     };
   }
 
-  appendData() {
-    const arr = [...this.state.series];
-    arr.push(Math.floor(Math.random() * (100 - 1 + 1)) + 1);
-
-    this.setState({
-      series: arr
-    });
-  }
-
-  removeData() {
-    if (this.state.series.length === 1) return;
-
-    const arr = [...this.state.series];
-    arr.pop();
-
-    this.setState({
-      series: arr
-    });
-  }
-
-  randomize() {
-    this.setState({
-      series: this.state.series.map(() => Math.floor(Math.random() * (100 - 1 + 1)) + 1)
-    });
-  }
-
-  reset() {
-    this.setState({
-      series: [45, 35, 15, 5]
-    });
+  componentDidUpdate(prevProps) {
+    // Update state when props change
+    if (prevProps.akd !== this.props.akd || 
+        prevProps.rw !== this.props.rw || 
+        prevProps.sp !== this.props.sp) {
+      this.setState({
+        series: [this.props.akd, this.props.rw, this.props.sp]
+      });
+    }
   }
 
   render() {
@@ -81,7 +58,6 @@ class ApexChart extends React.Component {
             </div>
           </div>
         </div>
-        <div id="html-dist"></div>
       </div>
     );
   }
