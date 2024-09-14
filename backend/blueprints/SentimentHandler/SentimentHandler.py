@@ -30,7 +30,7 @@ Thread(target=update_sentiment, daemon=True).start()
 
 
 
-@Sentiment_Handler.route('api/sentiment/total_positive')
+@Sentiment_Handler.route('/api/sentiment/total_positive')
 def get_sentiment():
     return jsonify({
         'total_positive': total_positive,
