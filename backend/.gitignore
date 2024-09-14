@@ -1,3 +1,5 @@
 env/
 __pycache__/
 .env
+backend/app/_pycache__/init.cpython-310.pyc
+backend/app/_pycache__/views.cpython-310.pyc
