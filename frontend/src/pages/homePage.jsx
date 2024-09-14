@@ -42,9 +42,9 @@ const Button = styled.a`
   border-radius: 5px;
   text-decoration: none;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  position: absolute; /* Positioning for bottom placement */
-  right: 175px; /* Distance from the right edge */
-  bottom: 0; /* Place at the very bottom */
+  position: absolute; /* Positioning for top right placement */
+  right: 20px; /* Distance from the right edge */
+  top: 110px; /* Distance from the top edge */
 
   &:hover {
     background-color: rgba(0, 86, 179, 0.5); /* Darker blue with transparency */
@@ -70,7 +70,5 @@ const Button = styled.a`
 
   animation: bounce 2.5s infinite;
 `;
-
-
 
 export default HomePage;

@@ -9,14 +9,19 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px; /* Increased padding */
-  background-color: rgba(150, 150, 150, 0.5); /* Darker grey with a bit more black hue */
-  backdrop-filter: blur(15px); /* Glassmorphism effect */
-  border-radius: 20px; /* Slightly larger border radius for a softer look */
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Deeper shadow for more depth */
-  max-width: 1100px; /* Increased the width */
+  padding: 40px;
+  background-color: rgba(150, 150, 150, 0.5);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 1100px;
   width: 100%;
-  margin: 30px auto; /* Increased margin */
+  margin: 30px auto;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin: 15px auto;
+  }
 `;
 
 const Header = styled.div`
@@ -25,29 +30,39 @@ const Header = styled.div`
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 5px;
+  }
 `;
 
 const Title = styled.h1`
-  font-size: 24px; /* Reduced font size */
-  color: #000; /* Black font for contrast */
-  font-family: 'Poppins', sans-serif; /* Modern, clean font */
-  letter-spacing: 1px; /* Slight letter spacing */
-  text-transform: uppercase; /* Uppercase for emphasis */
+  font-size: 24px;
+  color: #000;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   margin-bottom: 10px;
-  font-weight: 600; /* Make the title bold */
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Shadow for depth */
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    text-align: center;
+  }
 `;
 
 const InfoIcon = styled.span`
-  font-size: 18px; 
+  font-size: 18px;
   cursor: pointer;
-  border: 1px solid #fff; 
+  border: 1px solid #fff;
   border-radius: 20%;
   padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.3);
   }
@@ -55,24 +70,32 @@ const InfoIcon = styled.span`
 
 const InfoText = styled.p`
   margin-top: 1px;
-  padding: 10px 20px; 
-  background-color: rgba(0, 0, 0, 0.7); 
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   font-size: 14px;
-  color: #fff; 
-  font-family: 'Roboto', sans-serif; 
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
   letter-spacing: 0.6px;
-  line-height: 1.0; 
-  max-width: 80%; 
+  line-height: 1.0;
+  max-width: 80%;
   text-align: center;
 `;
 
 const SubsectionContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 20px;
   width: 100%;
+  flex-wrap: nowrap; /* Ensure horizontal alignment */
+  align-items: stretch;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Reduced gap between items */
+  }
 `;
 
 const Subsection = styled.div`
@@ -85,30 +108,30 @@ const Subsection = styled.div`
   transition: transform 0.3s ease, background-color 0.3s ease;
   position: relative;
   font-family: 'Open Sans', sans-serif;
-  backdrop-filter: blur(10px); /* Adds blur for glassmorphism effect */
-  background: rgba(0, 0, 0, 0.4); /* Black transparent background */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for contrast */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), /* Outer shadow for depth */
-              inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Inner shadow for 3D effect */
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 4px 8px rgba(0, 0, 0, 0.3);
 
   &:hover {
     transform: translateY(-10px);
   }
+
+  @media (max-width: 768px) {
+    width: 80%; /* Full width on smaller screens */
+  }
 `;
 
 const RedSubsection = styled(Subsection)`
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.6), rgba(220, 20, 60, 0.3)), rgba(0, 0, 0, 0.4); 
-  /* Darker red gradient with black transparency */
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.6), rgba(220, 20, 60, 0.3)), rgba(0, 0, 0, 0.4);
 `;
 
 const GreenSubsection = styled(Subsection)`
-  background: linear-gradient(135deg, rgba(0, 100, 0, 0.6), rgba(50, 205, 50, 0.3)), rgba(0, 0, 0, 0.4); 
-  /* Darker green gradient with black transparency */
+  background: linear-gradient(135deg, rgba(0, 100, 0, 0.6), rgba(50, 205, 50, 0.3)), rgba(0, 0, 0, 0.4);
 `;
 
 const YellowSubsection = styled(Subsection)`
-  background: linear-gradient(135deg, rgba(255, 140, 0, 0.6), rgba(255, 215, 0, 0.3)), rgba(0, 0, 0, 0.4); 
-  /* Darker yellow gradient with black transparency */
+  background: linear-gradient(135deg, rgba(255, 140, 0, 0.6), rgba(255, 215, 0, 0.3)), rgba(0, 0, 0, 0.4);
 `;
 
 const Image = styled.img`
@@ -117,41 +140,58 @@ const Image = styled.img`
   object-fit: cover;
   border-radius: 50%;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  @media (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const NameAndParty = styled.div`
   margin-top: 10px;
   font-family: 'Open Sans', sans-serif;
   text-align: center;
-  color: #fff; /* White for contrast */
+  color: #fff;
 
-  /* Style for the name */
   & .name {
     font-size: 18px;
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.2);  /* Light white background */
+    background-color: rgba(255, 255, 255, 0.2);
     padding: 4px 8px;
     border-radius: 5px;
     display: inline-block;
     margin-bottom: 5px;
   }
 
-  /* Style for the horizontal line */
   & .separator {
     width: 50px;
     height: 2px;
-    background-color: rgba(255, 255, 255, 0.5); /* Light separator line */
+    background-color: rgba(255, 255, 255, 0.5);
     margin: 5px auto;
     border-radius: 2px;
   }
 
-  /* Style for the party */
   & .party {
     font-size: 14px;
     font-weight: normal;
-    font-family: 'Roboto', sans-serif; /* Secondary font */
+    font-family: 'Roboto', sans-serif;
   }
 `;
+
+const ChartContainer = styled.div`
+  width: 100%;
+  max-width: 800px; /* Increase the max-width as needed */
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 55px; /* Adjust this value to move the container more to the right */
+
+  @media (max-width: 768px) {
+    margin-top: 5px;
+    margin-left: 10px; /* Adjust for smaller screens if needed */
+  }
+`;
+
 
 const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP], 
   names = ["Anura Kumara Dissanayake", "Ranil Wickremesinghe", "Sajith Premadasa"], 
@@ -196,8 +236,11 @@ const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP],
             <div className="party">{parties[2]}</div>
           </NameAndParty>
         </YellowSubsection>
-        <ApexChart akd={45} rw={20} sp={15} />
       </SubsectionContainer>
+
+      <ChartContainer>
+      <ApexChart akd={45} rw={20} sp={15} />
+      </ChartContainer>
     </Container>
   );
 };
