@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ThreeSectionContainer from '../components/threeSectionContainer';
 
 const HomePage = () => {
   return (
@@ -10,6 +11,7 @@ const HomePage = () => {
         <Button href="https://elections.gov.lk/" target="_blank" rel="noopener noreferrer">
           Visit the Election Commission Website
         </Button>
+        <ThreeSectionContainer />
       </MainContent>
     </HomePageContainer>
   );
@@ -30,23 +32,26 @@ const MainContent = styled.div`
 
 const Button = styled.a`
   display: inline-block;
-  padding: 15px 30px;
-  margin-top: 20px;
-  font-size: 16px;
+  padding: 10px 20px; /* Reduced padding for smaller size */
+  margin: 0;
+  font-size: 14px; /* Slightly smaller font size */
   font-weight: bold;
   color: #ffffff;
-  background-color: #007bff; /* Blue color */
+  background-color: rgba(0, 123, 255, 0.5); /* Blue color with transparency */
   border: none;
   border-radius: 5px;
   text-decoration: none;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  
+  position: absolute; /* Positioning for top right placement */
+  right: 20px; /* Distance from the right edge */
+  top: 110px; /* Distance from the top edge */
+
   &:hover {
-    background-color: #0056b3; /* Darker blue */
+    background-color: rgba(0, 86, 179, 0.5); /* Darker blue with transparency */
   }
 
   &:active {
-    background-color: #004085; /* Even darker blue */
+    background-color: rgba(0, 64, 133, 0.5); /* Even darker blue with transparency */
     transform: scale(0.98);
   }
 
@@ -63,7 +68,7 @@ const Button = styled.a`
     }
   }
 
-  animation: bounce 2s infinite;
+  animation: bounce 2.5s infinite;
 `;
 
 export default HomePage;
