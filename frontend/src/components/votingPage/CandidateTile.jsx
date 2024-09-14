@@ -54,7 +54,7 @@ const Name = styled.h3`
   z-index: 2;
 `;
 
-const CandidateTile = ({ name, image }) => {
+const CandidateTile = ({ name, image, onVote }) => {
   const handleClick = async () => {
     try {
       const response = await fetch('http://127.0.0.1:5000/api/vote', {
@@ -72,6 +72,9 @@ const CandidateTile = ({ name, image }) => {
       const result = await response.text();
       alert('Vote counted for ' + name);
       console.log(result);
+      
+      // Call the onVote callback to update the VotingPage
+      onVote();
     } catch (error) {
       console.error('Error sending vote:', error);
       alert('Failed to count vote');
