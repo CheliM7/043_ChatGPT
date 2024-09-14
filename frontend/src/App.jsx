@@ -5,6 +5,8 @@ import NavBar from './components/navBar';
 import StartPage from './pages/startPage';
 import HomePage from './pages/homePage';
 import CandidatesPage from './pages/candidatesPage';
+import VotingPage from './pages/votingPage';
+
 
 // Layout component that conditionally renders the NavBar based on the current route
 const Layout = ({ children }) => {
@@ -25,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout><StartPage /></Layout>} />
         <Route path="/home" element={<Layout><HomePage /></Layout>} />
+        <Route path="/vote" element={<Layout><VotingPage /></Layout>} />
         <Route path="/candidates" element={<Layout><CandidatesPage /></Layout>}  />
       </Routes>
     </Router>
