@@ -6,7 +6,7 @@ class ApexChart extends React.Component {
     super(props);
 
     this.state = {
-      series: this.calculateSeries(props), // Calculate initial series
+      series: [45, 35, 15, 5], // Default values
       options: {
         chart: {
           width: 380,
@@ -17,7 +17,7 @@ class ApexChart extends React.Component {
         dataLabels: {
           enabled: false
         },
-        responsive: [ {
+        responsive: [{
           breakpoint: 480,
           options: {
             chart: {
@@ -34,21 +34,9 @@ class ApexChart extends React.Component {
           height: 230,
         }
       },
+      
+      
     };
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.akd !== this.props.akd || prevProps.rw !== this.props.rw || prevProps.sp !== this.props.sp) {
-      this.setState({
-        series: this.calculateSeries(this.props)
-      });
-    }
-  }
-
-  calculateSeries(props) {
-    const { akd = 0, rw = 0, sp = 0 } = props;
-    const other = 100 - (akd + rw + sp);
-    return [akd, rw, sp, other];
   }
 
   appendData() {
@@ -79,7 +67,7 @@ class ApexChart extends React.Component {
 
   reset() {
     this.setState({
-      series: this.calculateSeries({ akd: 45, rw: 35, sp: 15 })
+      series: [45, 35, 15, 5]
     });
   }
 
@@ -89,7 +77,7 @@ class ApexChart extends React.Component {
         <div>
           <div className="chart-wrap">
             <div id="chart">
-              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={380} />
+              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={420} />
             </div>
           </div>
         </div>
