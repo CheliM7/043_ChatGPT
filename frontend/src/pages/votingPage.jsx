@@ -3,6 +3,10 @@ import CandidateTile from '../components/votingPage/CandidateTile';
 import GraphComponent from '../components/votingPage/GraphComponent';
 import PublicPolls from '../components/votingPage/PublicPolls'; // Import the PublicPolls component
 import styled from 'styled-components';
+import AKD from '../assets/AKD.jpg';
+import SP from '../assets/SP.jpeg';
+import RW from '../assets/RW_2.jpeg';
+import Other from '../assets/other.jpeg';
 
 const Container = styled.div`
   display: flex;
@@ -36,10 +40,10 @@ const VotingPage = () => {
 
   // Sample candidates data
   const candidates = [
-    { name: 'Sajith Premadasa', image: 'path/to/image1.jpg' },
-    { name: 'Anura Kumara Dissanayake', image: 'path/to/image2.jpg' },
-    { name: 'Ranil Wickramasinghe', image: 'path/to/image3.jpg' },
-    { name: 'Other', image: 'path/to/image3.jpg' }
+    { name: 'Sajith Premadasa', image: SP },
+    { name: 'Anura Kumara Dissanayake', image: AKD },
+    { name: 'Ranil Wickramasinghe', image: RW },
+    { name: 'Other', image: Other }
   ];
 
   return (
