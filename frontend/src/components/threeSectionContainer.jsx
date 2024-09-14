@@ -5,7 +5,6 @@ import RW from '../assets/RW.jpg';
 import SP from '../assets/SP.jpeg';
 import ApexChart from './apexchart';
 
-// Styled Components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -130,7 +129,7 @@ const NameAndParty = styled.div`
   & .name {
     font-size: 18px;
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.2); /* Light background to highlight the name */
+    background-color: rgba(255, 255, 255, 0.2);  /* Light white background */
     padding: 4px 8px;
     border-radius: 5px;
     display: inline-block;
