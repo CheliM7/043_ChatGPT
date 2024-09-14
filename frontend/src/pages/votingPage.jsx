@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CandidateTile from '../components/votingPage/CandidateTile';
 import GraphComponent from '../components/votingPage/GraphComponent';
+import PublicPolls from '../components/votingPage/PublicPolls'; // Import the PublicPolls component
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -53,12 +54,17 @@ const VotingPage = () => {
               key={index}
               name={candidate.name}
               image={candidate.image}
-              onVote={handleVote} // Ensure this is passed correctly
+              onVote={handleVote} 
             />
           ))}
         </TilesContainer>
       )}
-      {voteSuccessful && <GraphComponent />} {/* Render graph component conditionally */}
+      {voteSuccessful && (
+        <>
+          <GraphComponent /> {/* Render graph component */}
+          <PublicPolls /> {/* Render public polls component below the graph */}
+        </>
+      )}
     </Container>
   );
 };
