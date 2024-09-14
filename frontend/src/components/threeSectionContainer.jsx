@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import AKD from '../assets/AKD.jpg';
 import RW from '../assets/RW.jpg';
 import SP from '../assets/SP.jpeg';
+import ApexChart from './apexchart';
 
 // Styled Components
 const Container = styled.div`
@@ -14,11 +15,10 @@ const Container = styled.div`
   backdrop-filter: blur(15px); /* Glassmorphism effect */
   border-radius: 20px; /* Slightly larger border radius for a softer look */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); /* Deeper shadow for more depth */
-  max-width: 1000px; /* Increased the width */
+  max-width: 1100px; /* Increased the width */
   width: 100%;
   margin: 30px auto; /* Increased margin */
 `;
-
 
 const Header = styled.div`
   display: flex;
@@ -40,32 +40,32 @@ const Title = styled.h1`
 
 
 const InfoIcon = styled.span`
-  font-size: 18px; /* Adjusted size */
+  font-size: 18px; 
   cursor: pointer;
-  border: 1px solid #fff; /* White border */
-  border-radius: 50%;
+  border: 1px solid #fff; 
+  border-radius: 20%;
   padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.6); /* Darker background */
+  background-color: rgba(0, 0, 0, 0.6); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
   
   &:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* Lighter on hover */
+    background-color: rgba(255, 255, 255, 0.3);
   }
 `;
 
 const InfoText = styled.p`
-  margin-top: 5px;
-  padding: 10px 20px; /* Adjust padding for smaller text box */
-  background-color: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+  margin-top: 1px;
+  padding: 10px 20px; 
+  background-color: rgba(0, 0, 0, 0.7); 
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   font-size: 14px;
-  color: #fff; /* White text for high contrast */
-  font-family: 'Roboto', sans-serif; /* Elegant sans-serif font */
+  color: #fff; 
+  font-family: 'Roboto', sans-serif; 
   letter-spacing: 0.6px;
-  line-height: 1.5; /* Improved readability */
-  max-width: 90%; /* Keep text width responsive */
+  line-height: 1.0; 
+  max-width: 80%; 
   text-align: center;
 `;
 
@@ -114,7 +114,6 @@ const YellowSubsection = styled(Subsection)`
 `;
 
 
-
 const Image = styled.img`
   width: 150px;
   height: 150px;
@@ -161,6 +160,7 @@ const ThreeSectionContainer = ({ scores = [0, 0, 0], images = [AKD, RW, SP] }) =
           <Image src={images[2]} alt="image-3" />
           <WinScore>Win Score: {scores[2]}</WinScore>
         </YellowSubsection>
+        <ApexChart akd={45} rw={20} sp={15} />
       </SubsectionContainer>
     </Container>
   );
