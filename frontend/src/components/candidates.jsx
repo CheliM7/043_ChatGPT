@@ -8,33 +8,34 @@ const GlobalStyle = createGlobalStyle`
 
 // Styled Components for Button
 const Button = styled.a`
-  position: fixed; /* Fixed position to keep it at the top left */
-  top: 20px; /* Space from the top */
-  left: 20px; /* Space from the left */
-  background-color: #0056b3; /* Button background color */
-  color: #fff; /* Text color */
-  padding: 10px 20px; /* Padding for button */
-  border-radius: 8px; /* Rounded corners */
-  text-decoration: none; /* Remove underline */
-  font-family: 'Roboto', sans-serif; /* Font */
-  font-weight: 700; /* Bold text */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #F4C300; /* Sri Lankan Flag Yellow */
+  color: #8B0000; /* Dark Crimson Red */
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
-    background-color: #004494; /* Darker background on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+    background-color: #E0A800; /* Lighter Yellow */
+    transform: scale(1.05);
   }
 
   &:focus {
-    outline: none; /* Remove default focus outline */
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3); /* Custom focus outline */
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
   }
 `;
+
 const Table = styled.table`
-  width: 90%; /* Adjust width for smaller screens */
-  max-width: 1200px; /* Maximum width for larger screens */
-  margin: 20px auto; /* Centered the table */
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
   border-collapse: collapse;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -42,68 +43,73 @@ const Table = styled.table`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    width: 100%; /* Full width for small screens */
-    font-size: 0.9rem; /* Adjust font size for better readability */
+    width: 100%;
+    font-size: 0.9rem;
   }
 `;
 
 const TableHeader = styled.th`
-  background-color: #0056b3;
-  color: #fff;
-  padding: 15px 25px; /* Increased padding on the left and right */
+  background-color: #4A1F1A; /* Dark Wine Red */
+  color: #F4C300; /* Sri Lankan Flag Yellow */
+  padding: 15px 25px;
   text-align: left;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid #F4C300; /* Sri Lankan Flag Yellow */
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
 
   @media (max-width: 768px) {
-    padding: 12px; /* Reduced padding for smaller screens */
-    font-size: 1rem; /* Adjust font size */
+    padding: 12px;
+    font-size: 1rem;
   }
 `;
 
 const TableCell = styled.td`
-  padding: 15px 25px; /* Increased padding on the left and right */
+  padding: 15px 25px;
   border-bottom: 1px solid #ddd;
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
 
   @media (max-width: 768px) {
-    padding: 12px; /* Reduced padding for smaller screens */
-    font-size: 0.9rem; /* Adjust font size */
+    padding: 12px;
+    font-size: 0.9rem;
   }
 `;
 
 const TableRow = styled.tr`
   &:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f5f5f0; /* Very light brown */
+  }
+  &:nth-child(odd) {
+    background-color: #ffffff; /* White for contrast */
   }
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #e0e0e0; /* Light gray for hover effect */
   }
 `;
 
+
 const HighlightedCell = styled(TableCell)`
-  color: #0056b3;
+  color: #4A1F1A; /* Dark Wine Red */
   font-weight: 700;
 `;
 
 const Heading = styled.h2`
   text-align: center;
-  font-size: 2.8rem; /* Larger font size for prominence */
-  font-weight: 700; /* Bold text for emphasis */
-  color: #003d7a; /* Darker color for contrast */
-  margin-bottom: 25px; /* Adequate space below the heading */
-  font-family: 'Merriweather', serif; /* Elegant and professional font */
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2), /* Soft shadow for emboss effect */
-               -1px -1px 3px rgba(255, 255, 255, 0.8); /* Subtle highlight for depth */
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #4A1F1A; /* Dark Wine Red */
+  margin-bottom: 25px;
+  font-family: 'Merriweather', serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2),
+               -1px -1px 3px rgba(255, 255, 255, 0.8);
 
   @media (max-width: 768px) {
-    font-size: 2rem; /* Adjust font size for smaller screens */
-    margin-bottom: 20px; /* Adjust margin for smaller screens */
+    font-size: 2rem;
+    margin-bottom: 20px;
   }
 `;
+
 
 const candidatesData = {
     major: [
