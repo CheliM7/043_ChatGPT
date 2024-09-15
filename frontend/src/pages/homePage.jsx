@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import ThreeSectionContainer from '../components/threeSectionContainer';
 import HorizontalBarChart from '../components/homePage/HorizontalBarChart';
+
 import ApexChart from '../components/homePage/apexchart';
 import WinPredictionDisplay from '../components/homePage/WinPredictionDisplay';
 import Chatbot from '../components/chatbot'; // Import the Chatbot component
@@ -31,11 +32,13 @@ const HomePage = () => {
             <WinPredictionDisplay />
           </ChartContainer>
           <ApexChartDescription>
+
             This is the current win prediction for each candidate. Factors link live sentiment score, Public and built-in polls counts are taken into account.
           </ApexChartDescription>
         </ChartWrapper>
         <TextDescription>
           This graph provides a real-time overview of public sentiment regarding the election, showcasing a positivity score derived from various sources such as news outlets, blogs, and social media platforms.
+
           <Highlight>The sentiment score gets updated in real time</Highlight>, reflecting the current mood and opinions of people across different channels. It offers valuable insights into election trends by gauging public perception in real time, helping you stay informed about the shifts in sentiment as they happen.
         </TextDescription>
         <HorizontalBarChart />
@@ -47,6 +50,32 @@ const HomePage = () => {
   );
 };
 
+const ChartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: auto; 
+`;
+
+// Styled component for the chart
+const ChartContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+// Styled component for the description
+const ApexChartDescription = styled.p`
+  font-size: 12px;
+  color: #666;
+  margin: 10px 0;
+  text-align: center; 
+  width: 100%;
+  max-width: 500px; /* Adjust as needed */
+
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);
@@ -57,6 +86,7 @@ const bounce = keyframes`
   60% {
     transform: translateY(-5px);
   }
+
 `;
 
 const HomePageContainer = styled.div`
@@ -77,7 +107,9 @@ const Button = styled.a`
   padding: 10px 20px;
   font-size: 14px;
   font-weight: bold;
+
   color: #7a0000;
+
   background-color: rgba(0, 123, 255, 0.5);
   border: none;
   border-radius: 5px;

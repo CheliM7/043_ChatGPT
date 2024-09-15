@@ -54,7 +54,9 @@ const InfoIcon = styled.span`
   font-size: 18px;
   cursor: pointer;
   border: 2px solid #1a73e8;
+
   border-radius: 20%;
+
   padding: 8px;
   background-color: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
