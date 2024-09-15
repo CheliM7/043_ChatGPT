@@ -16,7 +16,10 @@ import asyncio
 
 chatbot_handler = Blueprint('chatbot_handler', __name__)
 
-chatbot_service = ChatbotService()
+@chatbot_handler.before_app_request
+def initialize_chatbot_service():
+    global chatbot_service
+    chatbot_service = ChatbotService()
 
 @chatbot_handler.route('/api/get_answer', methods=['POST'])
 async def ask():
