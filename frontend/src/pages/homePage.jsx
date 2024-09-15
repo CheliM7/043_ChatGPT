@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import ThreeSectionContainer from '../components/threeSectionContainer';
 import HorizontalBarChart from '../components/homePage/HorizontalBarChart';
+import ApexChart from '../components/apexchart';
+
+
 
 const HomePage = () => {
   return (
@@ -11,6 +14,14 @@ const HomePage = () => {
           Visit the Election Commission Website
         </Button>
         <ThreeSectionContainer />
+        <ChartWrapper>
+          <ChartContainer>
+            <ApexChart />
+          </ChartContainer>
+          <ApexChartDescription>
+          This is the current win prediction for each candidate. Factors link live sentiment score, Public and bulit in polls counts are taken into account.
+          </ApexChartDescription>
+        </ChartWrapper>
         <TextDescription>
           This graph provides a real-time overview of public sentiment regarding the election, showcasing a positivity score derived from various sources such as news outlets, blogs, and social media platforms. 
           <Highlight>The sentiment score gets updated in real time</Highlight>, reflecting the current mood and opinions of people across different channels. It offers valuable insights into election trends by gauging public perception in real time, helping you stay informed about the shifts in sentiment as they happen.
@@ -20,6 +31,33 @@ const HomePage = () => {
     </HomePageContainer>
   );
 };
+
+const ChartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px; /* Adjust as needed */
+  margin: 0 auto;
+  height: auto; /* Adjust as needed */
+`;
+
+// Styled component for the chart
+const ChartContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+// Styled component for the description
+const ApexChartDescription = styled.p`
+  font-size: 18px;
+  color: #666;
+  margin: 10px 0;
+  text-align: left; /* Align text to the left for better readability */
+  width: 100%;
+  max-width: 500px; /* Adjust as needed */
+`;
 
 const HomePageContainer = styled.div`
   display: flex;
