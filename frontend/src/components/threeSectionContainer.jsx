@@ -1,4 +1,3 @@
-
 import styled from 'styled-components';
 import AKD from '../assets/AKD.jpg';
 import RW from '../assets/RW.jpg';
@@ -10,18 +9,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
-  background-color: rgba(150, 150, 150, 0.5);
-  backdrop-filter: blur(15px);
+  padding: 50px;
+  background-color: #f7f8fa;
   border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  max-width: 1100px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
   width: 100%;
-  margin: 30px auto;
+  margin: 40px auto;
 
   @media (max-width: 768px) {
-    padding: 20px;
-    margin: 15px auto;
+    padding: 25px;
+    margin: 20px auto;
   }
 `;
 
@@ -29,27 +27,26 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 25px;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
-  color: #000;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 1px;
+  font-size: 28px;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 10px;
-  font-weight: 600;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
   }
 `;
@@ -57,29 +54,29 @@ const Title = styled.h1`
 const InfoIcon = styled.span`
   font-size: 18px;
   cursor: pointer;
-  border: 1px solid #fff;
-  border-radius: 20%;
-  padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
+  border: 2px solid #1a73e8;
+  border-radius: 50%;
+  padding: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(26, 115, 232, 0.1);
+    transform: scale(1.1);
   }
 `;
 
 const InfoText = styled.p`
-  margin-top: 1px;
-  padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  margin-top: 15px;
+  padding: 15px 30px;
+  background-color: rgba(250, 250, 250, 0.9);
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  font-size: 14px;
-  color: #fff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-size: 15px;
+  color: #555;
   font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.6px;
-  line-height: 1.0;
+  line-height: 1.5;
   max-width: 80%;
   text-align: center;
 `;
@@ -87,15 +84,14 @@ const InfoText = styled.p`
 const SubsectionContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
   width: 100%;
-  flex-wrap: nowrap; /* Ensure horizontal alignment */
   align-items: stretch;
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Reduced gap between items */
+    gap: 15px;
   }
 `;
 
@@ -103,44 +99,44 @@ const Subsection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 35px;
   border-radius: 15px;
   width: 30%;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  position: relative;
   font-family: 'Open Sans', sans-serif;
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 4px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   }
 
   @media (max-width: 768px) {
-    width: 80%; /* Full width on smaller screens */
+    width: 85%;
   }
 `;
 
 const RedSubsection = styled(Subsection)`
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.6), rgba(220, 20, 60, 0.3)), rgba(0, 0, 0, 0.4);
+  background: linear-gradient(145deg, #ff8c8c, #ff4d4d);
 `;
 
 const GreenSubsection = styled(Subsection)`
-  background: linear-gradient(135deg, rgba(0, 100, 0, 0.6), rgba(50, 205, 50, 0.3)), rgba(0, 0, 0, 0.4);
+  background: linear-gradient(145deg, #98fb98, #32cd32);
 `;
 
 const YellowSubsection = styled(Subsection)`
-  background: linear-gradient(135deg, rgba(255, 140, 0, 0.6), rgba(255, 215, 0, 0.3)), rgba(0, 0, 0, 0.4);
+  background: linear-gradient(145deg, #ffd700, #ffa500);
 `;
 
 const Image = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
     width: 100px;
@@ -149,66 +145,60 @@ const Image = styled.img`
 `;
 
 const NameAndParty = styled.div`
-  margin-top: 10px;
-  font-family: 'Open Sans', sans-serif;
+  margin-top: 15px;
+  font-family: 'Roboto', sans-serif;
   text-align: center;
-  color: #fff;
+  color: #333;
 
   & .name {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 4px 8px;
-    border-radius: 5px;
-    display: inline-block;
-    margin-bottom: 5px;
+    padding: 6px 12px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
   }
 
   & .separator {
-    width: 50px;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.5);
-    margin: 5px auto;
-    border-radius: 2px;
+    width: 60px;
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 6px auto;
+    border-radius: 3px;
   }
 
   & .party {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: normal;
-    font-family: 'Roboto', sans-serif;
+    color: #777;
   }
 `;
 
 const ChartContainer = styled.div`
   width: 100%;
-  max-width: 800px; /* Increase the max-width as needed */
+  max-width: 850px;
   display: flex;
   justify-content: center;
-  margin-top: 30px;
-  margin-left: 55px; /* Adjust this value to move the container more to the right */
+  margin-top: 40px;
+  margin-left: 60px;
 
   @media (max-width: 768px) {
-    margin-top: 5px;
-    margin-left: 10px; /* Adjust for smaller screens if needed */
+    margin-top: 10px;
+    margin-left: 20px;
   }
 `;
 
-
-const ThreeSectionContainer = ({ 
-  images = [AKD, RW, SP], 
-  names = ["Anura Kumara Dissanayake", "Ranil Wickremesinghe", "Sajith Premadasa"], 
-  parties = ["National People's Power", "Independent", "Samagi Jana Balawegaya"] 
+const ThreeSectionContainer = ({
+  images = [AKD, RW, SP],
+  names = ["Anura Kumara Dissanayake", "Ranil Wickremesinghe", "Sajith Premadasa"],
+  parties = ["National People's Power", "Independent", "Samagi Jana Balawegaya"]
 }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [chartData, setChartData] = useState({ akd: 0, rw: 0, sp: 0 });
 
   useEffect(() => {
-    // Fetch data from Flask backend
     fetch('http://127.0.0.1:5000/api/WinPrediction')
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched data:', data);
-        console.log(data["Anura Kumara Dissanayake"]);
         setChartData({
           akd: data["Anura Kumara Dissanayake"],
           rw: data["Ranil Wickramasinghe"],
