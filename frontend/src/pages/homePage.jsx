@@ -74,7 +74,7 @@ const Button = styled.a`
 `;
 
 const TextDescription = styled.p`
-  margin: 30px 40px; 
+  margin: 30px 120px; 
   font-size: 20px; 
   color: #333;
   text-align: left; 
