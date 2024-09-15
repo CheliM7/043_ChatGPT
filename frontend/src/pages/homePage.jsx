@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ThreeSectionContainer from '../components/threeSectionContainer';
 import HorizontalBarChart from '../components/homePage/HorizontalBarChart';
 import ApexChart from '../components/apexchart';
-
+import WinPredictionDisplay from '../components/homePage/WinPredictionDisplay';
 
 
 const HomePage = () => {
@@ -17,6 +17,7 @@ const HomePage = () => {
         <ChartWrapper>
           <ChartContainer>
             <ApexChart />
+            <WinPredictionDisplay />
           </ChartContainer>
           <ApexChartDescription>
           This is the current win prediction for each candidate. Factors link live sentiment score, Public and bulit in polls counts are taken into account.
@@ -37,9 +38,9 @@ const ChartWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1000px; /* Adjust as needed */
+  max-width: 1000px;
   margin: 0 auto;
-  height: auto; /* Adjust as needed */
+  height: auto; 
 `;
 
 // Styled component for the chart
@@ -51,10 +52,10 @@ const ChartContainer = styled.div`
 
 // Styled component for the description
 const ApexChartDescription = styled.p`
-  font-size: 18px;
+  font-size: 12px;
   color: #666;
   margin: 10px 0;
-  text-align: left; /* Align text to the left for better readability */
+  text-align: center; 
   width: 100%;
   max-width: 500px; /* Adjust as needed */
 `;
