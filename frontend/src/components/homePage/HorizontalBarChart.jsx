@@ -113,4 +113,6 @@ const HorizontalBarChart = () => {
   );
 };
 
+
 export default HorizontalBarChart;
+

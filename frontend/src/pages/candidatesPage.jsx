@@ -15,8 +15,8 @@ const Button = styled.a`
   align-items: center;
   justify-content: center;
   background-color: transparent; /* Transparent background */
-  color: #0056b3; /* Icon color */
-  border: 2px solid #0056b3; /* Border color */
+  color: #4A1F1A; /* Icon color */
+  border: 2px solid #4A1F1A; /* Border color */
   border-radius: 50%; /* Circle shape */
   text-decoration: none;
   font-family: 'Roboto', sans-serif;
@@ -25,9 +25,9 @@ const Button = styled.a`
   transition: background-color 0.3s, color 0.3s, transform 0.3s;
 
   &:hover {
-    background-color: #0056b3; /* Button background color on hover */
+    background-color: #4A1F1A; /* Button background color on hover */
     color: #fff; /* Icon color on hover */
-    border-color: #0056b3; /* Border color on hover */
+    border-color: #4A1F1A; /* Border color on hover */
     transform: scale(1.05);
   }
 
@@ -36,6 +36,7 @@ const Button = styled.a`
     box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
   }
 `;
+
 
 const CandidatesPage = () => {
   return (

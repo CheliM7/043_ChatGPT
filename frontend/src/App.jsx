@@ -6,6 +6,7 @@ import StartPage from './pages/startPage';
 import HomePage from './pages/homePage';
 import CandidatesPage from './pages/candidatesPage';
 import VotingPage from './pages/votingPage';
+import ManifestoPage from './pages/manifestoPage';  
 
 
 // Layout component that conditionally renders the NavBar based on the current route
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/" element={<Layout><StartPage /></Layout>} />
         <Route path="/home" element={<Layout><HomePage /></Layout>} />
         <Route path="/vote" element={<Layout><VotingPage /></Layout>} />
+        <Route path="/manifestos" element={<Layout><ManifestoPage /></Layout>} />
         <Route path="/candidates" element={<Layout><CandidatesPage /></Layout>}  />
       </Routes>
     </Router>
