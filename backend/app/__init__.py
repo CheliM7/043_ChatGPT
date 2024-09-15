@@ -1,6 +1,7 @@
 from flask import Flask
 from blueprints.SentimentHandler.SentimentHandler import Sentiment_Handler
 from blueprints.PollingHandler.PollingHandler import Polling_Handler
+from blueprints.ChatbotHandler.ChatbotHandler import chatbot_handler
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -14,6 +15,7 @@ CORS(app, resources={r"/api/*": {
 
 app.register_blueprint(Sentiment_Handler)
 app.register_blueprint(Polling_Handler)
+app.register_blueprint(chatbot_handler)
 
 from app import views
 

@@ -88,8 +88,7 @@ class ChatbotService:
                 print("Retriever ISSSS !!!: ", retriever)
                 
                 retrieved_docs = retriever.invoke({"input": response.query, "chat_history": self.chat_history})
-                
-                time.sleep(2)
+
                 # Log retrieved documents
                 print(f"Retrieved Docs: {retrieved_docs}")
 
