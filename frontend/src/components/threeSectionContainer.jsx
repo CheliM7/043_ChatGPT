@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import AKD from '../assets/AKD.jpg';
 import RW from '../assets/RW.jpg';
 import SP from '../assets/SP.jpeg';
-import ApexChart from './apexchart';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const Container = styled.div`
   display: flex;
@@ -173,40 +172,12 @@ const NameAndParty = styled.div`
   }
 `;
 
-const ChartContainer = styled.div`
-  width: 100%;
-  max-width: 850px;
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  margin-left: 60px;
-
-  @media (max-width: 768px) {
-    margin-top: 10px;
-    margin-left: 20px;
-  }
-`;
-
 const ThreeSectionContainer = ({
   images = [AKD, RW, SP],
   names = ["Anura Kumara Dissanayake", "Ranil Wickremesinghe", "Sajith Premadasa"],
   parties = ["National People's Power", "Independent", "Samagi Jana Balawegaya"]
 }) => {
   const [showInfo, setShowInfo] = useState(false);
-  const [chartData, setChartData] = useState({ akd: 0, rw: 0, sp: 0 });
-
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/WinPrediction')
-      .then(response => response.json())
-      .then(data => {
-        setChartData({
-          akd: data["Anura Kumara Dissanayake"],
-          rw: data["Ranil Wickramasinghe"],
-          sp: data["Sajith Premadasa"]
-        });
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
 
   return (
     <Container>
@@ -248,9 +219,7 @@ const ThreeSectionContainer = ({
         </YellowSubsection>
       </SubsectionContainer>
 
-      <ChartContainer>
-        <ApexChart akd={chartData.akd} rw={chartData.rw} sp={chartData.sp} />
-      </ChartContainer>
+      {/* Remove the ChartContainer */}
     </Container>
   );
 };
