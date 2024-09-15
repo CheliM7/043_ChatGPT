@@ -6,7 +6,7 @@ class ApexChart extends React.Component {
     super(props);
 
     this.state = {
-      series: [props.akd || 0, props.rw || 0, props.sp || 0], // Initialize with props
+      series: [0, 0, 0], // Initialize with default values
       options: {
         chart: {
           width: 380,
@@ -31,34 +31,41 @@ class ApexChart extends React.Component {
         legend: {
           position: 'right',
           offsetY: 0,
-          height: 230,
+          height: 230
         }
-      },
+      }
     };
   }
 
-  componentDidUpdate(prevProps) {
-    // Update state when props change
-    if (prevProps.akd !== this.props.akd || 
-        prevProps.rw !== this.props.rw || 
-        prevProps.sp !== this.props.sp) {
-      this.setState({
-        series: [this.props.akd, this.props.rw, this.props.sp]
-      });
-    }
+  componentDidMount() {
+    // Fetch data here
+    this.fetchData();
   }
 
+  fetchData = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/WinPrediction');
+      const data = await response.json();
+      console.log('Fetched data:', data);
+      console.log('AKD:', data['Anura Kumara Dissanayake']);
+      this.setState({
+        series: [data['Anura Kumara Dissanayake'], data['Ranil Wickramasinghe'], data['Sajith Premadasa']] // Use actual values from the response
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   render() {
+    const { series, options } = this.state;
+
     return (
-      <div>
-        <div>
-          <div className="chart-wrap">
-            <div id="chart">
-              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={420} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="donut"
+        width="500"
+      />
     );
   }
 }
