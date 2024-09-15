@@ -1,17 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import ThreeSectionContainer from '../components/threeSectionContainer';
+import HorizontalBarChart from '../components/homePage/HorizontalBarChart';
 
 const HomePage = () => {
   return (
     <HomePageContainer>
       <MainContent>
-        {/* <h1>Welcome to SL ELECTIONS 2024</h1>
-        <p>Stay updated with the latest election news and updates.</p> */}
         <Button href="https://elections.gov.lk/" target="_blank" rel="noopener noreferrer">
           Visit the Election Commission Website
         </Button>
         <ThreeSectionContainer />
+        <TextDescription>
+          This graph provides a real-time overview of public sentiment regarding the election, showcasing a positivity score derived from various sources such as news outlets, blogs, and social media platforms. 
+          <Highlight>The sentiment score gets updated in real time</Highlight>, reflecting the current mood and opinions of people across different channels. It offers valuable insights into election trends by gauging public perception in real time, helping you stay informed about the shifts in sentiment as they happen.
+        </TextDescription>
+        <HorizontalBarChart />
       </MainContent>
     </HomePageContainer>
   );
@@ -32,30 +36,28 @@ const MainContent = styled.div`
 
 const Button = styled.a`
   display: inline-block;
-  padding: 10px 20px; /* Reduced padding for smaller size */
-  margin: 0;
-  font-size: 14px; /* Slightly smaller font size */
+  padding: 10px 20px;
+  font-size: 14px;
   font-weight: bold;
   color: #ffffff;
-  background-color: rgba(0, 123, 255, 0.5); /* Blue color with transparency */
+  background-color: rgba(0, 123, 255, 0.5);
   border: none;
   border-radius: 5px;
   text-decoration: none;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  position: absolute; /* Positioning for top right placement */
-  right: 20px; /* Distance from the right edge */
-  top: 110px; /* Distance from the top edge */
+  position: absolute;
+  right: 20px;
+  top: 110px;
 
   &:hover {
-    background-color: rgba(0, 86, 179, 0.5); /* Darker blue with transparency */
+    background-color: rgba(0, 86, 179, 0.5);
   }
 
   &:active {
-    background-color: rgba(0, 64, 133, 0.5); /* Even darker blue with transparency */
+    background-color: rgba(0, 64, 133, 0.5);
     transform: scale(0.98);
   }
 
-  /* Keyframes for up and down movement */
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
       transform: translateY(0);
@@ -70,5 +72,18 @@ const Button = styled.a`
 
   animation: bounce 2.5s infinite;
 `;
+
+const TextDescription = styled.p`
+  margin: 30px 40px; 
+  font-size: 20px; 
+  color: #333;
+  text-align: left; 
+`;
+
+const Highlight = styled.span`
+  background-color: yellow; /* Highlight color */
+  font-weight: bold; /* Optional: make the text bold */
+`;
+
 
 export default HomePage;
