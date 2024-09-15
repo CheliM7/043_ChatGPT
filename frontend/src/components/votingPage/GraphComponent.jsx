@@ -34,7 +34,7 @@ const GraphComponent = () => {
     // Fetch voting results
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/polling/candidates'); // Replace with your API endpoint
+        const response = await fetch('http://127.0.0.1:5000/api/polling/candidates'); 
         const result = await response.json();
 
         // Log the raw result
