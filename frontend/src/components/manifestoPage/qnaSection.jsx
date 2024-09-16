@@ -1,111 +1,199 @@
-
 import React, { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
+
+// Spinner animation
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const Container = styled.div`
+  padding: 30px;
+  max-width: 700px;
+  margin: 0 auto;
+  
+  font-family: Arial, sans-serif;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+`;
+
+const Heading = styled.h2`
+  color: #fff;
+  margin-bottom: 20px;
+`;
+
+const InputSection = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+  font-size: 18px;
+  font-weight: 600;
+  color: #ddd;
+`;
+
+const Input = styled.input`
+  width: 80%;
+  max-width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #4A1F1A; /* Dark Wine Red */
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent input background */
+`;
+
+const Button = styled.button`
+  padding: 12px 25px;
+  font-size: 18px;
+  background-color: #4A1F1A; /* Dark Wine Red */
+  color: #F4C300; /* Sri Lankan Flag Yellow */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
+const LoadingSection = styled.div`
+  margin-top: 20px;
+`;
+
+const LoadingText = styled.p`
+  color: #fff;
+  font-size: 18px;
+`;
+
+const Loader = styled.div`
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #F4C300; /* Sri Lankan Flag Yellow */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: ${spin} 1s linear infinite; /* Spinner animation */
+  margin: 0 auto;
+`;
+
+const AnswerSection = styled.div`
+  margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
+const AnswerHeading = styled.h3`
+  color: #333;
+  margin-bottom: 10px;
+`;
+
+const AnswerText = styled.div`
+  font-size: 16px;
+  color: #555;
+  text-align: left; /* Left-align the answer text */
+`;
 
 const QnASection = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleQuestionChange = (event) => {
     setQuestion(event.target.value);
   };
 
-  const generateAnswer = () => {
-    // You can customize this logic to generate an actual answer, e.g., calling an API
-    setAnswer(`This is the answer to your question: "${question}"`);
+  const generateAnswer = async () => {
+    if (!question) {
+      alert("Please type a question.");
+      return;
+    }
+
+    setLoading(true);
+    setAnswer('');
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/api/get_answer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setAnswer(formatAnswer(data.answer));
+    } catch (error) {
+      console.error('Error fetching the answer:', error);
+      setAnswer('There was an error fetching the answer. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const formatAnswer = (answer) => {
+    const sections = answer.split('\n\n');
+  
+    return sections.map((section, index) => {
+      if (section.startsWith('*')) {
+        const items = section.split('\n').filter(item => item.trim());
+        return (
+          <div key={index} style={{ marginBottom: '10px' }}>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', textAlign: 'left' }}>
+              {items.map((item, idx) => {
+                const formattedItem = item.replace(/^\* /, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Remove leading * and format bold text
+                return (
+                  <li key={idx} style={{ color: '#555' }} dangerouslySetInnerHTML={{ __html: formattedItem }} />
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+  
+      const formattedSection = section.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Format bold text in sections
+      return (
+        <div key={index} style={{ marginBottom: '10px', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: formattedSection }} />
+      );
+    });
+  };
+  
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Q&A Generator</h2>
-      <div style={styles.inputSection}>
-        <label htmlFor="question" style={styles.label}>Ask your question:</label>
-        <input
+    <Container>
+      <Heading>Q&A Generator</Heading>
+      <InputSection>
+        <Label htmlFor="question">Ask your question:</Label>
+        <Input
           type="text"
           id="question"
           value={question}
           onChange={handleQuestionChange}
-          style={styles.input}
           placeholder="Type your question here"
         />
-      </div>
-      <button onClick={generateAnswer} style={styles.button}>
-        Get Answer
-      </button>
-      {answer && (
-        <div style={styles.answerSection}>
-          <h3 style={styles.answerHeading}>Answer:</h3>
-          <p style={styles.answerText}>{answer}</p>
-        </div>
+      </InputSection>
+      <Button onClick={generateAnswer}>Get Answer</Button>
+      {loading && (
+        <LoadingSection>
+          <LoadingText>Generating Answer...</LoadingText>
+          <Loader />
+        </LoadingSection>
       )}
-    </div>
+      {answer && (
+        <AnswerSection>
+          <AnswerHeading>Answer:</AnswerHeading>
+          <AnswerText>{answer}</AnswerText>
+        </AnswerSection>
+      )}
+    </Container>
   );
-};
-
-const styles = {
-  container: {
-    padding: '30px',
-    maxWidth: '700px',
-    margin: '0 auto',
-    fontFamily: 'Arial, sans-serif',
-    textAlign: 'center',
-    border: '1px solid rgba(255, 255, 255, 0.3)',
-    borderRadius: '10px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-  },
-  heading: {
-    color: '#fff',
-    marginBottom: '20px',
-  },
-  inputSection: {
-    marginBottom: '20px',
-  },
-  label: {
-    fontSize: '18px',
-    fontWeight: '600',
-    color: '#ddd',
-  },
-  input: {
-    width: '80%',
-    maxWidth: '100%',
-    padding: '12px',
-    fontSize: '16px',
-    border: '2px solid #4A1F1A', // Dark Wine Red
-    borderRadius: '8px',
-    outline: 'none',
-    transition: 'border-color 0.3s',
-    boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.2)',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Semi-transparent input background
-  },
-  button: {
-    padding: '12px 25px',
-    fontSize: '18px',
-    backgroundColor: '#4A1F1A', // Dark Wine Red
-    color: '#F4C300', // Sri Lankan Flag Yellow
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-  },
-  buttonHover: {
-    backgroundColor: '#3A0E0A', // Darker shade of Dark Wine Red
-  },
-  answerSection: {
-    marginTop: '20px',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)', // Slightly transparent background
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-  },
-  answerHeading: {
-    color: '#333',
-    marginBottom: '10px',
-  },
-  answerText: {
-    fontSize: '16px',
-    color: '#555',
-  },
 };
 
 export default QnASection;
