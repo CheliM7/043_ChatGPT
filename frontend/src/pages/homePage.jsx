@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import ThreeSectionContainer from '../components/threeSectionContainer';
 import HorizontalBarChart from '../components/homePage/HorizontalBarChart';
 import ApexChart from '../components/homePage/apexchart';
 import WinPredictionDisplay from '../components/homePage/WinPredictionDisplay';
-import Chatbot from '../components/chatbot'; // Import the Chatbot component
+import Chatbot from '../components/chatbot'; 
 
 const HomePage = () => {
   const [isBouncing, setIsBouncing] = useState(true);
@@ -24,15 +23,11 @@ const HomePage = () => {
         <Button href="https://elections.gov.lk/" target="_blank" rel="noopener noreferrer">
           Visit the Election Commission Website
         </Button>
-        <ThreeSectionContainer />
         <ChartWrapper>
           <ChartContainer>
             <ApexChart />
             <WinPredictionDisplay />
           </ChartContainer>
-          <ApexChartDescription>
-            This is the current win prediction for each candidate. Factors link live sentiment score, Public and built-in polls counts are taken into account.
-          </ApexChartDescription>
         </ChartWrapper>
         <TextDescription>
           This graph provides a real-time overview of public sentiment regarding the election, showcasing a positivity score derived from various sources such as news outlets, blogs, and social media platforms.
