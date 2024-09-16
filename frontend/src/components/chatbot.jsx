@@ -8,6 +8,7 @@ const Chatbot = () => {
   ]);
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false); // State to control accordion visibility
+  const [loading, setLoading] = useState(false); // Loading state for thinking...
   const chatHistoryRef = useRef(null);
 
   useEffect(() => {
@@ -16,23 +17,62 @@ const Chatbot = () => {
     }
   }, [messages, isOpen]);
 
-  const handleSendMessage = () => {
-    if (input.trim()) {
-      const userMessage = { from: 'user', text: input.trim() };
-      const botReply = generateBotReply(input.trim());
+  const formatAnswer = (answer) => {
+    const sections = answer.split('\n\n');
 
-      setMessages([...messages, userMessage, { from: 'bot', text: botReply }]);
-      setInput('');
-    }
+    return sections.map((section, index) => {
+      if (section.startsWith('*')) {
+        const items = section.split('\n').filter(item => item.trim());
+        return (
+          <div key={index} style={{ marginBottom: '10px' }}>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', textAlign: 'left' }}>
+              {items.map((item, idx) => {
+                const formattedItem = item.replace(/^\* /, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Remove leading * and format bold text
+                return (
+                  <li key={idx} style={{ color: '#FFD700' }} dangerouslySetInnerHTML={{ __html: formattedItem }} />
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+
+      const formattedSection = section.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Format bold text in sections
+      return (
+        <div key={index} style={{ marginBottom: '10px', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: formattedSection }} />
+      );
+    });
   };
 
-  const generateBotReply = (userMessage) => {
-    if (userMessage.toLowerCase().includes('hello')) {
-      return 'I am an AI chatbot designed to answer questions related to Sri Lankan elections. How can I help you today?';
-    } else if (userMessage.toLowerCase().includes('bye')) {
-      return 'Goodbye! Feel free to come back anytime.';
-    } else {
-      return "I'm here to help. Could you clarify your question?";
+  const handleSendMessage = async () => {
+    if (input.trim()) {
+      const userMessage = { from: 'user', text: input.trim() };
+      setMessages((prevMessages) => [...prevMessages, userMessage]);
+      setInput('');
+      setLoading(true); // Start loading
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/get_answer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ question: input.trim() }), // Send the 'question' field
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        const botReply = formatAnswer(data.answer); // Format the answer
+        setMessages((prevMessages) => [...prevMessages, { from: 'bot', text: botReply }]);
+      } catch (error) {
+        console.error('Error communicating with the backend:', error);
+        setMessages((prevMessages) => [...prevMessages, { from: 'bot', text: "Sorry, I couldn't get a response from the server." }]);
+      } finally {
+        setLoading(false); // Stop loading
+      }
     }
   };
 
@@ -52,9 +92,10 @@ const Chatbot = () => {
           <ChatHistory ref={chatHistoryRef}>
             {messages.map((message, index) => (
               <ChatMessage key={index} from={message.from}>
-                {message.text}
+                {message.from === 'bot' ? message.text : message.text}
               </ChatMessage>
             ))}
+            {loading && <ChatMessage from="bot">Generating...</ChatMessage>} {/* Show "Thinking..." when loading */}
           </ChatHistory>
           <ChatInput>
             <InputField
