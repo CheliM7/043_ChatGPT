@@ -6,34 +6,30 @@ class ApexChart extends React.Component {
     super(props);
 
     this.state = {
-      series: [0, 0, 0], // Initialize with default values
+      series: [0, 0, 0], // Initialize with default values for pie chart
       options: {
         chart: {
-          width: 380,
-          type: 'donut',
+          type: 'pie',
+          height: 400,
+          offsetX: -80, // Increase right margin
+          offsetY: 80, // Increase top margin
         },
-        labels: ['AKD', 'RW', 'SP'], // Labels for the sections
-        colors: ['#C62828', '#2C6B2F', '#FBC02D'], // Darker red, green, yellow
-        dataLabels: {
-          enabled: false
-        },
+        labels: ['AKD', 'RW', 'SP'], // Labels for the pie chart
+        colors: ['#C62828', '#43A047', '#F4C300'], // Colors for the segments
         responsive: [{
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              height: 300,
+              offsetX: 10, // Adjust for smaller screens if needed
+              offsetY: 10,
             },
-            legend: {
-              show: false
-            }
-          }
+          },
         }],
         legend: {
-          position: 'right',
-          offsetY: 0,
-          height: 230
-        }
-      }
+          position: 'bottom', // Positioning of the legend
+        },
+      },
     };
   }
 
@@ -47,9 +43,12 @@ class ApexChart extends React.Component {
       const response = await fetch('http://127.0.0.1:5000/api/WinPrediction');
       const data = await response.json();
       console.log('Fetched data:', data);
-      console.log('AKD:', data['Anura Kumara Dissanayake']);
       this.setState({
-        series: [data['Anura Kumara Dissanayake'], data['Ranil Wickramasinghe'], data['Sajith Premadasa']] // Use actual values from the response
+        series: [
+          data['Anura Kumara Dissanayake'],
+          data['Ranil Wickramasinghe'],
+          data['Sajith Premadasa'],
+        ], // Use actual values from the response
       });
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -63,13 +62,11 @@ class ApexChart extends React.Component {
       <ReactApexChart
         options={options}
         series={series}
-        type="donut"
-        width="500"
+        type="pie" // Change type to "pie"
+        height={450}
       />
     );
   }
 }
 
-
 export default ApexChart;
-
