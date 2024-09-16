@@ -6,33 +6,42 @@ class ApexChart extends React.Component {
     super(props);
 
     this.state = {
-      series: [0, 0, 0], // Initialize with default values
+      series: [{
+        name: 'Candidates',
+        data: [0, 0, 0], // Initialize with default values
+      }],
       options: {
         chart: {
-          width: 380,
-          type: 'donut',
+          type: 'bar',
+          height: 350,
         },
-        labels: ['AKD', 'RW', 'SP'], // Labels for the sections
-        colors: ['#C62828', '#2C6B2F', '#FBC02D'], // Darker red, green, yellow
+        // Define colors for each bar
+        colors: ['#90EE90', '#2C6B2F', '#FBC02D'], // Use the same colors
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            endingShape: 'rounded',
+            columnWidth: '55%',
+          },
+        },
         dataLabels: {
-          enabled: false
+          enabled: true,
+        },
+        xaxis: {
+          categories: ['AKD', 'RW', 'SP'], // Labels for the x-axis
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'center',
         },
         responsive: [{
           breakpoint: 480,
           options: {
-            chart: {
-              width: 200
-            },
             legend: {
-              show: false
-            }
-          }
+              position: 'bottom',
+            },
+          },
         }],
-        legend: {
-          position: 'right',
-          offsetY: 0,
-          height: 230
-        }
       }
     };
   }
@@ -47,9 +56,15 @@ class ApexChart extends React.Component {
       const response = await fetch('http://127.0.0.1:5000/api/WinPrediction');
       const data = await response.json();
       console.log('Fetched data:', data);
-      console.log('AKD:', data['Anura Kumara Dissanayake']);
       this.setState({
-        series: [data['Anura Kumara Dissanayake'], data['Ranil Wickramasinghe'], data['Sajith Premadasa']] // Use actual values from the response
+        series: [{
+          name: 'Candidates',
+          data: [
+            data['Anura Kumara Dissanayake'], 
+            data['Ranil Wickramasinghe'], 
+            data['Sajith Premadasa']
+          ] // Use actual values from the response
+        }]
       });
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -63,13 +78,12 @@ class ApexChart extends React.Component {
       <ReactApexChart
         options={options}
         series={series}
-        type="donut"
-        width="500"
+        type="bar"
+        height={450}
+        width={600}
       />
     );
   }
 }
 
-
 export default ApexChart;
-
