@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CandidateTile from '../components/votingPage/CandidateTile';
@@ -8,6 +8,7 @@ import AKD from '../assets/AKD.jpg';
 import SP from '../assets/SP.jpeg';
 import RW from '../assets/RW_2.jpeg';
 import Other from '../assets/other.jpeg';
+import Chatbot from '../components/chatbot'; // Import the Chatbot component
 
 const NAVBAR_HEIGHT = '120px';
 
@@ -67,6 +68,7 @@ const TilesContainer = styled.div`
 
 const VotingPage = () => {
   const [voteSuccessful, setVoteSuccessful] = useState(false);
+  const [isBouncing, setIsBouncing] = useState(true); // State for chatbot bouncing animation
 
   const handleVote = () => {
     console.log("Vote button clicked"); // Log when button is clicked
@@ -80,6 +82,17 @@ const VotingPage = () => {
     { name: 'Ranil Wickramasinghe', image: RW },
     { name: 'Other', image: Other }
   ];
+
+  // Handle chatbot click to stop bouncing
+  const handleChatbotClick = () => {
+    setIsBouncing(false);
+    // Add any additional logic for opening the chatbot
+  };
+
+  // Ensure the chatbot bounces on mount
+  useEffect(() => {
+    setIsBouncing(true);
+  }, []);
 
   return (
     <>
@@ -109,8 +122,22 @@ const VotingPage = () => {
           </>
         )}
       </Container>
+      <ChatbotWrapper isBouncing={isBouncing} onClick={handleChatbotClick}>
+        <Chatbot /> {/* Add the Chatbot component inside a wrapper */}
+      </ChatbotWrapper>
     </>
   );
 };
+
+const ChatbotWrapper = styled.div`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000; /* Ensure the chatbot is on top */
+  ${props => props.isBouncing && `
+    animation: bounce 2.5s infinite;
+  `}
+  cursor: pointer;
+`;
 
 export default VotingPage;
