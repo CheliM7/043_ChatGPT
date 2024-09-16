@@ -17,18 +17,20 @@ class ChatbotService:
 
         # Get the API key from environment variables
         self.api_key = os.getenv("GOOGLE_API_KEY")
+        
 
         # Initialize embeddings and LLM
         self.embeddings = GoogleGenerativeAIEmbeddings(api_key=self.api_key, model="models/embedding-001")
         self.llm = ChatGoogleGenerativeAI(api_key=self.api_key, model="gemini-1.5-flash", temperature=0.3, max_tokens=1000)
         self.chat_history = []
 
+        self.persist_directory = "local_chroma_db"
         # Initialize vectorstores and retrievers
         self.vectorstores = {
-            "general": Chroma(persist_directory="local_chroma_db", embedding_function=self.embeddings, collection_name="general"),
-            "sajith_premadasa": Chroma(persist_directory="local_chroma_db", embedding_function=self.embeddings, collection_name="sajith_premadasa"),
-            "anura_kumara_dissanayake": Chroma(persist_directory="local_chroma_db", embedding_function=self.embeddings, collection_name="anura_kumara_dissanayake"),
-            "ranil_wickramasinghe": Chroma(persist_directory="local_chroma_db", embedding_function=self.embeddings, collection_name="ranil_wickramasinghe"),
+            "general": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="general"),
+            "sajith_premadasa": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="sajith_premadasa"),
+            "anura_kumara_dissanayake": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="anura_kumara_dissanayake"),
+            "ranil_wickramasinghe": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="ranil_wickramasinghe"),
         }
         
         self.retrievers = {
@@ -220,10 +222,3 @@ class SearchAndCompare(BaseModel):
         ...,
         description="Person to look things up for or persons to compare. Should be `sajith_premadasa` or `anura_kumara_dissanayake` or `ranil_wickramasinghe` or can be 'null'.",
     )
-
-
-chatbot_service = ChatbotService()
-
-# questions = ["Compare ranil with anura"]
-
-# print(chatbot_service.chatbot(questions[0]))
