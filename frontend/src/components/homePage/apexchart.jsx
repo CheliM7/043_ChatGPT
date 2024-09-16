@@ -10,7 +10,9 @@ class ApexChart extends React.Component {
       options: {
         chart: {
           type: 'pie',
-          height: 350,
+          height: 400,
+          offsetX: -80, // Increase right margin
+          offsetY: 80, // Increase top margin
         },
         labels: ['AKD', 'RW', 'SP'], // Labels for the pie chart
         colors: ['#C62828', '#43A047', '#F4C300'], // Colors for the segments
@@ -19,6 +21,8 @@ class ApexChart extends React.Component {
           options: {
             chart: {
               height: 300,
+              offsetX: 10, // Adjust for smaller screens if needed
+              offsetY: 10,
             },
           },
         }],
@@ -59,7 +63,7 @@ class ApexChart extends React.Component {
         options={options}
         series={series}
         type="pie" // Change type to "pie"
-        height={350}
+        height={450}
       />
     );
   }
