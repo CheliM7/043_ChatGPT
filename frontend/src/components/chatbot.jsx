@@ -8,6 +8,7 @@ const Chatbot = () => {
   ]);
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false); // State to control accordion visibility
+  const [loading, setLoading] = useState(false); // Loading state for thinking...
   const chatHistoryRef = useRef(null);
 
   useEffect(() => {
@@ -47,8 +48,8 @@ const Chatbot = () => {
     if (input.trim()) {
       const userMessage = { from: 'user', text: input.trim() };
       setMessages((prevMessages) => [...prevMessages, userMessage]);
-
       setInput('');
+      setLoading(true); // Start loading
 
       try {
         const response = await fetch('http://127.0.0.1:5000/api/get_answer', {
@@ -69,6 +70,8 @@ const Chatbot = () => {
       } catch (error) {
         console.error('Error communicating with the backend:', error);
         setMessages((prevMessages) => [...prevMessages, { from: 'bot', text: "Sorry, I couldn't get a response from the server." }]);
+      } finally {
+        setLoading(false); // Stop loading
       }
     }
   };
@@ -92,6 +95,7 @@ const Chatbot = () => {
                 {message.from === 'bot' ? message.text : message.text}
               </ChatMessage>
             ))}
+            {loading && <ChatMessage from="bot">Generating...</ChatMessage>} {/* Show "Thinking..." when loading */}
           </ChatHistory>
           <ChatInput>
             <InputField
