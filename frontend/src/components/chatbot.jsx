@@ -4,7 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai'; // Import the close icon
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([
-    { from: 'bot', text: 'Hello! How can I help you today?' }
+    { from: 'bot', text: 'I am an AI chatbot designed to answer questions related to Sri Lankan elections. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false); // State to control accordion visibility
@@ -28,7 +28,7 @@ const Chatbot = () => {
 
   const generateBotReply = (userMessage) => {
     if (userMessage.toLowerCase().includes('hello')) {
-      return 'Hi there! How can I assist you further?';
+      return 'I am an AI chatbot designed to answer questions related to Sri Lankan elections. How can I help you today?';
     } else if (userMessage.toLowerCase().includes('bye')) {
       return 'Goodbye! Feel free to come back anytime.';
     } else {
@@ -40,13 +40,15 @@ const Chatbot = () => {
 
   return (
     <ChatbotContainer>
-      <ToggleContainer onClick={() => setIsOpen(!isOpen)}>
-        <ToggleButton>
-          {isOpen ? <CloseButton onClick={() => setIsOpen(false)}><AiOutlineClose /></CloseButton> : 'Chat with us'}
-        </ToggleButton>
-      </ToggleContainer>
-      {isOpen && (
+      {!isOpen ? (
+        <ToggleContainer onClick={() => setIsOpen(true)}>
+          <ToggleButton>Chat with us</ToggleButton>
+        </ToggleContainer>
+      ) : (
         <ChatWindow>
+          <CloseIcon onClick={() => setIsOpen(false)}>
+            <AiOutlineClose />
+          </CloseIcon>
           <ChatHistory ref={chatHistoryRef}>
             {messages.map((message, index) => (
               <ChatMessage key={index} from={message.from}>
@@ -75,7 +77,7 @@ const ChatbotContainer = styled.div`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  background-color: #f5e8d0;
+  background-color: #ececec; /* Very light ash background */
   border-radius: 15px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   font-family: 'Roboto', sans-serif;
@@ -88,14 +90,14 @@ const ToggleContainer = styled.div`
   cursor: pointer;
   padding: 10px;
   text-align: center;
-  background-color: transparent;
+  background-color: #f5e8d0; /* Light brown shade */
   border: 2px solid #4a1f1a;
   border-radius: 10px;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const ToggleButton = styled.div`
-  display: inline-block;
   font-size: 16px;
   padding: 10px 20px;
   text-transform: uppercase;
@@ -104,21 +106,6 @@ const ToggleButton = styled.div`
   color: #4a1f1a;
   border-radius: 10px;
   transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
-`;
-
-const CloseButton = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 24px;
-  color: #4a1f1a;
-  transition: color 0.3s ease;
-  &:hover {
-    color: #8b0000;
-  }
 `;
 
 const ChatWindow = styled.div`
@@ -126,6 +113,20 @@ const ChatWindow = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 600px;
+  position: relative;
+`;
+
+const CloseIcon = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #4a1f1a;
+  transition: color 0.3s ease;
+  &:hover {
+    color: #8b0000;
+  }
 `;
 
 const ChatHistory = styled.div`
@@ -141,7 +142,7 @@ const ChatMessage = styled.div`
   padding: 15px;
   margin: 10px 0;
   border-radius: 20px;
-  max-width: 70%;
+  max-width: 90%; /* Increased width to take up more space */
   word-break: break-word;
   background-color: ${({ from }) => (from === 'bot' ? '#4a1f1a' : '#f4c300')};
   color: ${({ from }) => (from === 'bot' ? 'white' : '#4a1f1a')};
