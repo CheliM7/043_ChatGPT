@@ -51,7 +51,7 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1; /* Ensures Details takes up remaining space */
-  gap: 3px; /* Space between the details lines */
+  gap: 1.5px; /* Space between the details lines */
   margin-right: 50px; /* Increased space after the details */
   white-space: nowrap; /* Prevents wrapping within Details */
 `;
