@@ -40,3 +40,7 @@ This is the backend component It is built using Flask and serves as an API to ha
 3. Install the required packages
    ```bash
    pip install -r requirements.txt
+
+4. Start the Backend Server
+   ```bash
+   flask run --debug
