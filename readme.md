@@ -35,7 +35,7 @@ This is the backend component It is built using Flask and serves as an API to ha
 2. Create and activate a virtual environment
    ```bash
    python -m venv env
-   venv\Scripts\activate
+   .env\Scripts\activate
 
 3. Install the required packages
    ```bash
