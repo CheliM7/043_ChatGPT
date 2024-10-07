@@ -25,6 +25,11 @@ const Heading = styled.h2`
   margin-bottom: 20px;
 `;
 
+const SubHeading = styled.h3`
+  color: #ddd;
+  margin-bottom: 15px;
+`;
+
 const InputSection = styled.div`
   margin-bottom: 20px;
 `;
@@ -113,8 +118,8 @@ const QnASection = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [loading, setLoading] = useState(false);
-  const [candidate1, setCandidate1] = useState('candidate1');
-  const [candidate2, setCandidate2] = useState('candidate2');
+  const [candidate1, setCandidate1] = useState('');
+  const [candidate2, setCandidate2] = useState('');
 
   const handleQuestionChange = (event) => {
     setQuestion(event.target.value);
@@ -129,8 +134,8 @@ const QnASection = () => {
   };
 
   const generateAnswer = async () => {
-    if (!question) {
-      alert("Please type a question.");
+    if (!question || !candidate1 || !candidate2) {
+      alert("Please type a question and select both candidates.");
       return;
     }
 
@@ -189,19 +194,22 @@ const QnASection = () => {
 
   return (
     <Container>
-      <Heading>Q&A Generator</Heading>
+      <Heading>Manifesto Comparator</Heading>
+      <SubHeading>Compare manifestos of candidates</SubHeading> {/* Added this heading */}
       <InputSection>
         <Label htmlFor="candidate1">Candidate 1:</Label>
         <Select id="candidate1" value={candidate1} onChange={handleCandidate1Change}>
-          <option value="candidate1">Candidate 1</option>
-          <option value="candidate2">Candidate 2</option>
-          <option value="candidate3">Candidate 3</option>
+          <option value="" disabled>Select a candidate</option> {/* Placeholder */}
+          <option value="candidate1">Anura Dissanayake</option>
+          <option value="candidate2">Sajith Premadasa</option>
+          <option value="candidate3">Ranil Wickremasinghe</option>
         </Select>
         <Label htmlFor="candidate2">Candidate 2:</Label>
         <Select id="candidate2" value={candidate2} onChange={handleCandidate2Change}>
-          <option value="candidate1">Candidate 1</option>
-          <option value="candidate2">Candidate 2</option>
-          <option value="candidate3">Candidate 3</option>
+          <option value="" disabled>Select a candidate</option> {/* Placeholder */}
+          <option value="candidate1">Anura Dissanayake</option>
+          <option value="candidate2">Sajith Premadasa</option>
+          <option value="candidate3">Ranil Wickremasinghe</option>
         </Select>
       </InputSection>
       <InputSection>
