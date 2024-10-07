@@ -9,71 +9,106 @@ const spin = keyframes`
 
 const Container = styled.div`
   padding: 30px;
-  max-width: 700px;
+  max-width: 90%;  
   margin: 0 auto;
-  
   font-family: Arial, sans-serif;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: #2E2E2E;  /* Darker gray for better contrast */
+  
+  @media (min-width: 768px) {
+    max-width: 700px; 
+  }
 `;
 
 const Heading = styled.h2`
   color: #fff;
   margin-bottom: 20px;
+  font-size: 24px;
+  text-decoration: underline;  /* Add underline */
+  
+  @media (min-width: 768px) {
+    font-size: 28px; /* Larger font on medium screens */
+  }
 `;
 
 const SubHeading = styled.h3`
   color: #ddd;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const InputSection = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column; /* Stack inputs vertically on small screens */
+
+  @media (min-width: 768px) {
+    flex-direction: row; /* Row layout for larger screens */
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Label = styled.label`
   font-size: 18px;
   font-weight: 600;
   color: #ddd;
-  margin-right: 10px;
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    margin-right: 10px;  /* Space between label and input on large screens */
+  }
 `;
 
 const Select = styled.select`
   padding: 12px;
   font-size: 16px;
-  border: 2px solid #4A1F1A; /* Dark Wine Red */
+  border: 2px solid #4A1F1A;
   border-radius: 8px;
   outline: none;
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent input background */
-  margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    margin-right: 20px; /* Adjusted for spacing on larger screens */
+    margin-bottom: 0; /* Remove margin-bottom in row layout */
+  }
 `;
 
 const Input = styled.input`
-  width: 80%;
+  width: 100%;  /* Full width for mobile */
   max-width: 100%;
   padding: 12px;
   font-size: 16px;
-  border: 2px solid #4A1F1A; /* Dark Wine Red */
+  border: 2px solid #4A1F1A;
   border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent input background */
+  background-color: rgba(255, 255, 255, 0.8);
 `;
 
 const Button = styled.button`
   padding: 12px 25px;
   font-size: 18px;
-  background-color: #4A1F1A; /* Dark Wine Red */
-  color: #F4C300; /* Sri Lankan Flag Yellow */
+  background-color: #4A1F1A;
+  color: #F4C300;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 20px; /* Added margin for better spacing */
+
+  &:hover {
+    background-color: #722a1e;  /* Slight color change on hover */
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 0; /* Remove extra margin on larger screens */
+  }
 `;
 
 const LoadingSection = styled.div`
@@ -87,17 +122,17 @@ const LoadingText = styled.p`
 
 const Loader = styled.div`
   border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid #F4C300; /* Sri Lankan Flag Yellow */
+  border-top: 4px solid #F4C300;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  animation: ${spin} 1s linear infinite; /* Spinner animation */
+  animation: ${spin} 1s linear infinite;
   margin: 0 auto;
 `;
 
 const AnswerSection = styled.div`
   margin-top: 20px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -111,7 +146,7 @@ const AnswerHeading = styled.h3`
 const AnswerText = styled.div`
   font-size: 16px;
   color: #555;
-  text-align: left; /* Left-align the answer text */
+  text-align: left;
 `;
 
 const QnASection = () => {
@@ -167,7 +202,7 @@ const QnASection = () => {
 
   const formatAnswer = (answer) => {
     const sections = answer.split('\n\n');
-  
+
     return sections.map((section, index) => {
       if (section.startsWith('*')) {
         const items = section.split('\n').filter(item => item.trim());
@@ -175,7 +210,7 @@ const QnASection = () => {
           <div key={index} style={{ marginBottom: '10px' }}>
             <ul style={{ listStyleType: 'disc', paddingLeft: '20px', textAlign: 'left' }}>
               {items.map((item, idx) => {
-                const formattedItem = item.replace(/^\* /, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Remove leading * and format bold text
+                const formattedItem = item.replace(/^\* /, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 return (
                   <li key={idx} style={{ color: '#555' }} dangerouslySetInnerHTML={{ __html: formattedItem }} />
                 );
@@ -184,8 +219,8 @@ const QnASection = () => {
           </div>
         );
       }
-  
-      const formattedSection = section.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Format bold text in sections
+
+      const formattedSection = section.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       return (
         <div key={index} style={{ marginBottom: '10px', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: formattedSection }} />
       );
@@ -195,34 +230,34 @@ const QnASection = () => {
   return (
     <Container>
       <Heading>Manifesto Comparator</Heading>
-      <SubHeading>Compare manifestos of candidates</SubHeading> {/* Added this heading */}
+      <SubHeading>Compare manifestos of candidates</SubHeading>
       <InputSection>
         <Label htmlFor="candidate1">Candidate 1:</Label>
         <Select id="candidate1" value={candidate1} onChange={handleCandidate1Change}>
-          <option value="" disabled>Select a candidate</option> {/* Placeholder */}
+          <option value="" disabled>Select a candidate</option>
           <option value="candidate1">Anura Dissanayake</option>
           <option value="candidate2">Sajith Premadasa</option>
           <option value="candidate3">Ranil Wickremasinghe</option>
         </Select>
         <Label htmlFor="candidate2">Candidate 2:</Label>
         <Select id="candidate2" value={candidate2} onChange={handleCandidate2Change}>
-          <option value="" disabled>Select a candidate</option> {/* Placeholder */}
+          <option value="" disabled>Select a candidate</option>
           <option value="candidate1">Anura Dissanayake</option>
           <option value="candidate2">Sajith Premadasa</option>
           <option value="candidate3">Ranil Wickremasinghe</option>
         </Select>
       </InputSection>
+      <SubHeading>Specify area of interest</SubHeading>
       <InputSection>
-        <Label htmlFor="question">Ask your question:</Label>
         <Input
           type="text"
           id="question"
           value={question}
           onChange={handleQuestionChange}
-          placeholder="Type your question here"
+          placeholder="Type here"
         />
       </InputSection>
-      <Button onClick={generateAnswer}>Get Answer</Button>
+      <Button onClick={generateAnswer}>Compare</Button>
       {loading && (
         <LoadingSection>
           <LoadingText>Generating Answer...</LoadingText>
