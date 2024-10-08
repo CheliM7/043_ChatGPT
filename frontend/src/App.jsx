@@ -6,8 +6,8 @@ import StartPage from './pages/startPage';
 import HomePage from './pages/homePage';
 import CandidatesPage from './pages/candidatesPage';
 import VotingPage from './pages/votingPage';
-import ManifestoPage from './pages/manifestoPage';  
-
+import ManifestoPage from './pages/manifestoPage';
+import FactCheckerPage from './pages/factCheckerPage'; 
 
 // Layout component that conditionally renders the NavBar based on the current route
 const Layout = ({ children }) => {
@@ -30,7 +30,8 @@ const App = () => {
         <Route path="/home" element={<Layout><HomePage /></Layout>} />
         <Route path="/vote" element={<Layout><VotingPage /></Layout>} />
         <Route path="/manifestos" element={<Layout><ManifestoPage /></Layout>} />
-        <Route path="/candidates" element={<Layout><CandidatesPage /></Layout>}  />
+        <Route path="/candidates" element={<Layout><CandidatesPage /></Layout>} />
+        <Route path="/factchecker" element={<Layout><FactCheckerPage /></Layout>} /> 
       </Routes>
     </Router>
   );
