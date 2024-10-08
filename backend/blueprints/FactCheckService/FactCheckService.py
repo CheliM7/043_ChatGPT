@@ -20,13 +20,18 @@ class FactCheckService:
         self.chat_history = []
 
         # Set your existing vector store path for presidential facts
-        self.persist_directory = "local_chroma_db" 
+        self.persist_directory = "local_chroma_db"
 
-        # Initialize vector store for presidential facts
-        self.vectorstore = Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="general")
+        # Initialize vector stores for different politicians and general facts
+        self.vectorstores = {
+            "general": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="general"),
+            "sajith_premadasa": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="sajith_premadasa"),
+            "anura_kumara_dissanayake": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="anura_kumara_dissanayake"),
+            "ranil_wickramasinghe": Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="ranil_wickramasinghe"),
+        }
 
-        # Initialize retriever
-        self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 10})
+        # Initialize retrievers for each vector store
+        self.retrievers = {name: vectorstore.as_retriever(search_kwargs={"k": 10}) for name, vectorstore in self.vectorstores.items()}
 
         # Define fact-checking prompt
         self.system_prompt = (
@@ -44,12 +49,26 @@ class FactCheckService:
             ]
         )
 
+    def determine_vector_store(self, fact):
+        """Determine which vector store to use based on the fact."""
+        if "sajith" in fact.lower():
+            return self.retrievers["sajith_premadasa"]
+        elif "anura" in fact.lower():
+            return self.retrievers["anura_kumara_dissanayake"]
+        elif "ranil" in fact.lower():
+            return self.retrievers["ranil_wickramasinghe"]
+        else:
+            return self.retrievers["general"]
+
     def qa_chain(self, fact):
         # Log the incoming fact
         print(f"Fact: {fact}")
 
+        # Determine the appropriate retriever based on the fact
+        retriever = self.determine_vector_store(fact)
+
         # Invoke retriever to get documents
-        retrieved_docs = self.retriever.get_relevant_documents(fact)
+        retrieved_docs = retriever.get_relevant_documents(fact)
 
         # Log retrieved documents
         print(f"Retrieved Documents: {retrieved_docs}")
