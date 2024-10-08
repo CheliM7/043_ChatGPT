@@ -19,16 +19,18 @@ class FactCheckService:
         self.llm = ChatGoogleGenerativeAI(api_key=self.api_key, model="gemini-1.5-flash", temperature=0.3, max_tokens=1000)
         self.chat_history = []
 
-        # Set your existing vector store path
-        self.persist_directory = "local_chroma_db"  
-        self.vectorstore = self.initialize_vector_store()
+        # Set your existing vector store path for presidential facts
+        self.persist_directory = "local_chroma_db" 
+
+        # Initialize vector store for presidential facts
+        self.vectorstore = Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="general")
 
         # Initialize retriever
         self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 10})
 
         # Define fact-checking prompt
         self.system_prompt = (
-            "You are an assistant that checks the validity of the following fact. "
+            "You are an assistant that checks the validity of the following fact related to presidents. "
             "Use the context provided to determine if the fact is supported or not. "
             "Respond with 'True' if the fact is supported by the retrieved context, "
             "'False' if it is not supported, and 'Unknown' if there is not enough information."
@@ -42,14 +44,6 @@ class FactCheckService:
             ]
         )
 
-    def initialize_vector_store(self):
-        # Load the existing vector store
-        if os.path.exists(self.persist_directory) and len(os.listdir(self.persist_directory)) > 0:
-            print(f"Loading existing vector store from {self.persist_directory}")
-            return Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings, collection_name="stock_market")
-        else:
-            raise FileNotFoundError("Vector store not found at the specified path.")
-
     def qa_chain(self, fact):
         # Log the incoming fact
         print(f"Fact: {fact}")
@@ -61,10 +55,11 @@ class FactCheckService:
         print(f"Retrieved Documents: {retrieved_docs}")
 
         # Convert retrieved_docs to a string if it's a list
-        if isinstance(retrieved_docs, list):
+        if isinstance(retrieved_docs, list) and retrieved_docs:
             retrieved_docs = "\n\n".join([doc.page_content for doc in retrieved_docs if hasattr(doc, 'page_content')])
         else:
             print("No documents retrieved.")
+            retrieved_docs = ""
 
         # Create the prompt with retrieved context and fact
         prompt = (
