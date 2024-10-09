@@ -47,7 +47,7 @@ const DateInfo = styled(Typography)(({ theme }) => ({
 const RightSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: '12px', // Reduced gap
+  gap: '72px', // Reduced gap
   flexDirection: 'row',
   justifyContent: 'flex-end',
   [theme.breakpoints.down('sm')]: {
