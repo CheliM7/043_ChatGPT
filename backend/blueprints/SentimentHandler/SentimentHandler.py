@@ -54,7 +54,7 @@ collection = db['candidates']
 
 public_polls = {
     'Sajith Premadasa': 9501,
-    'Anura Kumara Dissanayake': 12290,
+    'Anura Kumara Dissanayake': 12000,
     'Ranil Wickramasinghe': 6244
 }
 
