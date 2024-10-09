@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Button, Tooltip, Box, useMediaQuery } from '@mui/material';
-import { AccountCircle, Description, Poll } from '@mui/icons-material';
+import { AccountCircle, Description, Poll, CheckCircle } from '@mui/icons-material'; // Import CheckCircle icon
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -121,6 +121,16 @@ const NavBar = () => {
               <IconButton>
                 <Description sx={{ fontSize: '1.8rem' }} /> {/* Reduced icon size */}
                 <Typography variant="body1">Manifestos</Typography>
+              </IconButton>
+            </Link>
+          </Tooltip>
+
+          {/* Fact Checker */}
+          <Tooltip title="Check Facts" arrow>
+            <Link to="/factchecker" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <IconButton>
+                <CheckCircle sx={{ fontSize: '1.8rem' }} /> {/* CheckCircle icon */}
+                <Typography variant="body1">Fact Checker</Typography>
               </IconButton>
             </Link>
           </Tooltip>
