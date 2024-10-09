@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import factImage from '../../assets/sl.png';
 
 const spin = keyframes`
   0% { transform: rotate(0deg); }
@@ -30,6 +31,12 @@ const Heading = styled.h2`
   @media (max-width: 600px) {
     font-size: 24px;
   }
+`;
+
+const Image = styled.img`
+  height: 200px;
+  margin-bottom: 0px;
+  border-radius: 10px;
 `;
 
 const InputSection = styled.div`
@@ -195,7 +202,8 @@ const FactChecker = () => {
 
   return (
     <Container>
-      <Heading>Fact Checker</Heading>
+      <Image src={factImage} alt="Fact Checking" />
+      <Heading>We Value Truth</Heading>
       <InputSection>
         <Label htmlFor="fact">Enter a fact to check:</Label>
         <Input
