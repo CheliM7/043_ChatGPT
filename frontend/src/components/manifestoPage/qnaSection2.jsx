@@ -173,23 +173,26 @@ const QnASection = () => {
       alert("Please type a question and select both candidates.");
       return;
     }
-
+  
     setLoading(true);
     setAnswer('');
-
+  
     try {
+      // Ensure the question includes a comparison between the two candidates
+      const modifiedQuestion = `Compare ${candidate1} and ${candidate2} on ${question}.`;
+  
       const response = await fetch('http://127.0.0.1:5000/api/get_answer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ question, candidate1, candidate2 }),
+        body: JSON.stringify({ question: modifiedQuestion, candidate1, candidate2 }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const data = await response.json();
       setAnswer(formatAnswer(data.answer));
     } catch (error) {
@@ -199,7 +202,7 @@ const QnASection = () => {
       setLoading(false);
     }
   };
-
+  
   const formatAnswer = (answer) => {
     const sections = answer.split('\n\n');
 
@@ -235,38 +238,36 @@ const QnASection = () => {
         <Label htmlFor="candidate1">Candidate 1:</Label>
         <Select id="candidate1" value={candidate1} onChange={handleCandidate1Change}>
           <option value="" disabled>Select a candidate</option>
-          <option value="candidate1">Anura Dissanayake</option>
-          <option value="candidate2">Sajith Premadasa</option>
-          <option value="candidate3">Ranil Wickremasinghe</option>
+          <option value="Anura Dissanayake">Anura Dissanayake</option>
+          <option value="Sajith Premadasa">Sajith Premadasa</option>
+          <option value="Ranil Wickremasinghe">Ranil Wickremasinghe</option>
         </Select>
         <Label htmlFor="candidate2">Candidate 2:</Label>
         <Select id="candidate2" value={candidate2} onChange={handleCandidate2Change}>
           <option value="" disabled>Select a candidate</option>
-          <option value="candidate1">Anura Dissanayake</option>
-          <option value="candidate2">Sajith Premadasa</option>
-          <option value="candidate3">Ranil Wickremasinghe</option>
+          <option value="Anura Dissanayake">Anura Dissanayake</option>
+          <option value="Sajith Premadasa">Sajith Premadasa</option>
+          <option value="Ranil Wickremasinghe">Ranil Wickremasinghe</option>
         </Select>
       </InputSection>
-      <SubHeading>Specify area of interest</SubHeading>
-      <InputSection>
-        <Input
-          type="text"
-          id="question"
-          value={question}
-          onChange={handleQuestionChange}
-          placeholder="Type here"
-        />
-      </InputSection>
-      <Button onClick={generateAnswer}>Compare</Button>
+      <Input
+        type="text"
+        placeholder="Enter your question here"
+        value={question}
+        onChange={handleQuestionChange}
+      />
+      <Button onClick={generateAnswer}>Compare Manifestos</Button>
+
       {loading && (
         <LoadingSection>
-          <LoadingText>Generating Answer...</LoadingText>
           <Loader />
+          <LoadingText>Loading...</LoadingText>
         </LoadingSection>
       )}
+
       {answer && (
         <AnswerSection>
-          <AnswerHeading>Answer:</AnswerHeading>
+          <AnswerHeading>Comparison Results:</AnswerHeading>
           <AnswerText>{answer}</AnswerText>
         </AnswerSection>
       )}
