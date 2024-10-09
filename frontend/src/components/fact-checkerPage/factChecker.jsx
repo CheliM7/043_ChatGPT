@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import factImage from '../../assets/sl.png';
 
-// Spinner animation
 const spin = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -10,14 +10,13 @@ const spin = keyframes`
 const Container = styled.div`
   padding: 30px;
   max-width: 700px;
-  margin: 20px auto; /* Added margin for small devices */
-  
-  font-family: Arial, sans-serif;
+  margin: 20px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 
   @media (max-width: 600px) {
     padding: 20px;
@@ -25,68 +24,77 @@ const Container = styled.div`
 `;
 
 const Heading = styled.h2`
-  color: #fff;
+  color: #333;
   margin-bottom: 20px;
-  font-size: 24px; /* Larger text for larger screens */
+  font-size: 28px;
 
   @media (max-width: 600px) {
-    font-size: 20px; /* Slightly smaller on small devices */
+    font-size: 24px;
   }
+`;
+
+const Image = styled.img`
+  height: 200px;
+  margin-bottom: 0px;
+  border-radius: 10px;
 `;
 
 const InputSection = styled.div`
   margin-bottom: 20px;
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Label = styled.label`
   font-size: 18px;
   font-weight: 600;
-  color: #ddd;
+  color: #555;
   margin-bottom: 10px;
-  text-align: center; /* Center align the label text */
-  width: 100%; /* Full width to align with input */
+  text-align: center;
+  width: 100%;
 `;
 
 const Input = styled.input`
-  width: 80%; /* Width of input field */
-  max-width: 400px; /* Limit max width for larger screens */
+  width: 80%;
+  max-width: 400px;
   padding: 12px;
   font-size: 16px;
-  border: 2px solid #4A1F1A; /* Dark Wine Red */
+  border: 2px solid #c0c0c0;
   border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent input background */
+  background-color: #fff;
+
+  &:focus {
+    border-color: #00b4d8;
+  }
 
   @media (max-width: 600px) {
     padding: 10px;
-    font-size: 14px; /* Slightly smaller font on small devices */
-    width: 90%; /* Increase width on smaller screens */
+    font-size: 14px;
+    width: 90%;
   }
 `;
 
 const Button = styled.button`
   padding: 12px 25px;
   font-size: 18px;
-  background-color: #4A1F1A; /* Dark Wine Red */
-  color: #F4C300; /* Sri Lankan Flag Yellow */
+  background-color: #00b4d8;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   
   &:hover {
-    background-color: #70281e; /* Darker Wine Red on hover */
+    background-color: #0077b6;
   }
 
   @media (max-width: 600px) {
-    padding: 10px 15px; /* Adjust button padding for small screens */
-    font-size: 16px; /* Slightly smaller font on small devices */
+    padding: 10px 15px;
+    font-size: 16px;
   }
 `;
 
@@ -95,72 +103,53 @@ const LoadingSection = styled.div`
 `;
 
 const LoadingText = styled.p`
-  color: #fff;
+  color: #555;
   font-size: 18px;
 
   @media (max-width: 600px) {
-    font-size: 16px; /* Slightly smaller font on small devices */
+    font-size: 16px;
   }
 `;
 
 const Loader = styled.div`
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid #F4C300; /* Sri Lankan Flag Yellow */
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #00b4d8;
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  animation: ${spin} 1s linear infinite; /* Spinner animation */
+  animation: ${spin} 1s linear infinite;
   margin: 0 auto;
 `;
 
-const ResultSection = styled.div`
-  margin-top: 20px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+const AnswerDisplay = ({ fact, isTrue, unknown }) => {
+  const randomStyles = {
+    backgroundColor: unknown ? '#fff3cd' : isTrue ? '#d4edda' : '#f8d7da',
+    color: unknown ? '#856404' : isTrue ? '#155724' : '#721c24',
+    border: unknown ? '2px solid #ffeeba' : isTrue ? '2px solid #c3e6cb' : '2px solid #f5c6cb',
+    padding: '15px',
+    borderRadius: '10px',
+    marginTop: '20px',
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
+  };
 
-  @media (max-width: 600px) {
-    padding: 15px; /* Adjust padding for small screens */
-  }
-`;
-
-const ResultHeading = styled.h3`
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 20px;
-
-  @media (max-width: 600px) {
-    font-size: 18px; /* Adjust font size for small screens */
-  }
-`;
-
-const FactText = styled.div`
-  font-size: 16px;
-  color: #555;
-  text-align: left; /* Left-align the fact text */
-  margin-bottom: 10px;
-
-  @media (max-width: 600px) {
-    font-size: 14px; /* Smaller font for small devices */
-  }
-`;
-
-const ResultText = styled.div`
-  font-size: 16px;
-  color: ${(props) => (props.isTrue ? 'green' : 'red')}; /* Set color based on truth value */
-  font-weight: bold;
-
-  @media (max-width: 600px) {
-    font-size: 14px; /* Smaller font for small devices */
-  }
-`;
+  return (
+    <div style={randomStyles}>
+      {unknown ? (
+        <h3>Fact is Unknown</h3>
+      ) : (
+        <h3>{isTrue ? 'Fact is True' : 'Fact is False'}</h3>
+      )}
+      <p>{`Fact: "${fact}"`}</p>
+    </div>
+  );
+};
 
 const FactChecker = () => {
   const [fact, setFact] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isTrue, setIsTrue] = useState(false); // New state to track if the fact is true or false
+  const [isTrue, setIsTrue] = useState(false);
+  const [unknown, setUnknown] = useState(false);
 
   const handleFactChange = (event) => {
     setFact(event.target.value);
@@ -174,26 +163,47 @@ const FactChecker = () => {
 
     setLoading(true);
     setResult('');
-    setIsTrue(false); // Reset isTrue state before checking
+    setIsTrue(false);
+    setUnknown(false);
 
     try {
-      // Simulate fact-checking delay
-      setTimeout(() => {
-        // Assume the fact-checking logic (here, just a simple check for demonstration)
-        const isFactTrue = Math.random() >= 0.5; // Randomly determine true or false for demo
+      const response = await fetch('http://127.0.0.1:5000/api/factCheck', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question: fact }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const answer = data.answer.trim(); // Trim the newline character
         setResult(fact);
-        setIsTrue(isFactTrue);
-        setLoading(false);
-      }, 2000); // 2 second delay for demo purposes
+        console.log('Fact checked:', data);
+        
+        if (answer === 'True') {
+          setIsTrue(true);
+        } else if (answer === 'False') {
+          setIsTrue(false);
+        } else {
+          setUnknown(true); // Handle the case for unknown response
+        }
+      } else {
+        setResult('Error occurred while checking the fact. Please try again.');
+      }
     } catch (error) {
+      console.error('Error checking the fact:', error);
       setResult('Error occurred while checking the fact. Please try again.');
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <Container>
-      <Heading>Fact Checker</Heading>
+      <Image src={factImage} alt="Fact Checking" />
+      <Heading>We Value Truth</Heading>
       <InputSection>
         <Label htmlFor="fact">Enter a fact to check:</Label>
         <Input
@@ -213,13 +223,7 @@ const FactChecker = () => {
         </LoadingSection>
       )}
 
-      {result && (
-        <ResultSection>
-          <ResultHeading>Result:</ResultHeading>
-          <FactText>{`Fact: "${result}"`}</FactText>
-          <ResultText isTrue={isTrue}>{isTrue ? 'True' : 'False'}</ResultText>
-        </ResultSection>
-      )}
+      {result && <AnswerDisplay fact={result} isTrue={isTrue} unknown={unknown} />}
     </Container>
   );
 };
