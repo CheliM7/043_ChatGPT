@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import QnASection from '../components/manifestoPage/qnaSection';
+import QnASection from '../components/manifestoPage/qnaSection2';
 import SidebarSection from '../components/manifestoPage/sidebarSection';
 
 const NAVBAR_HEIGHT = '120px';  
