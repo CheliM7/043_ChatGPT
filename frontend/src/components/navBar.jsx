@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Button, Tooltip, Box, useMediaQuery } from '@mui/material';
-import { AccountCircle, Description, Poll, CheckCircle } from '@mui/icons-material'; // Import CheckCircle icon
+import { AccountCircle, Description, Poll, CheckCircle, Quiz } from '@mui/icons-material'; // Import CheckCircle icon
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -131,6 +131,16 @@ const NavBar = () => {
               <IconButton>
                 <CheckCircle sx={{ fontSize: '1.8rem' }} /> {/* CheckCircle icon */}
                 <Typography variant="body1">Fact Checker</Typography>
+              </IconButton>
+            </Link>
+          </Tooltip>
+          
+          {/* Quiz Bot */}
+          <Tooltip title="Quiz Bot" arrow>
+            <Link to="/quiz" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <IconButton>
+                <Quiz sx={{ fontSize: '1.8rem' }} /> {/* CheckCircle icon */}
+                <Typography variant="body1">Quiz Bot</Typography>
               </IconButton>
             </Link>
           </Tooltip>
