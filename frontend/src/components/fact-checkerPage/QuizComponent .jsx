@@ -7,7 +7,6 @@ const QuizContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 40px;
-  min-height: 100vh;
   color: #333;
   font-family: 'Poppins', sans-serif;
 `;
@@ -59,9 +58,10 @@ const QuizContent = styled.div`
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  max-width: 800px; // Increase this value as needed
   width: 100%;
 `;
+
 
 const Question = styled.h3`
   font-size: 24px;
@@ -139,6 +139,12 @@ const CheckAnswerButton = styled.button`
   }
 `;
 
+const LoadingIndicator = styled.div`
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+`;
+
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
@@ -185,6 +191,7 @@ const QuizComponent = () => {
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
   const [correctAnswerText, setCorrectAnswerText] = useState(''); // Store correct answer text
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   // Start the quiz
   const startQuiz = async () => {
@@ -210,6 +217,7 @@ const QuizComponent = () => {
 
   // Fetch a new question
   const fetchQuestion = async () => {
+    setIsLoading(true); // Set loading to true
     try {
       const response = await fetch('http://localhost:5000/api/quiz/get_question', {
         method: 'POST',
@@ -225,6 +233,8 @@ const QuizComponent = () => {
       setSelectedAnswer(null);
     } catch (error) {
       setExplanation('Failed to fetch question');
+    } finally {
+      setIsLoading(false); // Set loading to false after fetch
     }
   };
 
@@ -263,43 +273,35 @@ const QuizComponent = () => {
         </StartQuizContainer>
       ) : (
         <QuizContent>
-          <Question>{question}</Question>
-          <AnswerContainer>
-            {answers.length > 0 ? (
-              answers.map((answer, index) => (
-                <AnswerLabel
-                  key={index}
-                  selected={selectedAnswer === index}
-                  onClick={() => checkAnswer(index)}
-                >
-                  <input
-                    type="radio"
-                    name="answer"
-                    value={index}
-                    checked={selectedAnswer === index}
-                    onChange={() => checkAnswer(index)}
-                    style={{ display: 'none' }} // Hide the radio input
-                  />
-                  {answer}
-                </AnswerLabel>
-              ))
-            ) : (
-              <p>No answers available</p>
-            )}
-          </AnswerContainer>
-          {explanation && <Explanation isCorrect={selectedAnswer === correctAnswer - 1}>{explanation}</Explanation>}
-          <ButtonContainer>
-            <NextButton onClick={fetchQuestion}>Next Question</NextButton>
-            <CheckAnswerButton onClick={showCorrectAnswer}>Check Answer</CheckAnswerButton>
-          </ButtonContainer>
+          {isLoading ? (
+            <LoadingIndicator>Loading next question...</LoadingIndicator>
+          ) : (
+            <>
+              <Question>{question}</Question>
+              <AnswerContainer>
+                {answers.map((answer, index) => (
+                  <AnswerLabel
+                    key={index}
+                    selected={selectedAnswer === index}
+                    onClick={() => checkAnswer(index)}
+                  >
+                    {answer}
+                  </AnswerLabel>
+                ))}
+              </AnswerContainer>
+              {explanation && <Explanation isCorrect={selectedAnswer + 1 === correctAnswer}>{explanation}</Explanation>}
+              <ButtonContainer>
+                <CheckAnswerButton onClick={() => showCorrectAnswer()}>Show Correct Answer</CheckAnswerButton>
+                <NextButton onClick={fetchQuestion}>Next Question</NextButton>
+              </ButtonContainer>
+            </>
+          )}
         </QuizContent>
       )}
-
-      {/* Modal for showing the correct answer */}
       {isModalOpen && (
         <ModalBackground>
           <ModalContent>
-            <h3>Correct Answer</h3>
+            <h3>Correct Answer:</h3>
             <p>{correctAnswerText}</p>
             <CloseButton onClick={closeModal}>Close</CloseButton>
           </ModalContent>
