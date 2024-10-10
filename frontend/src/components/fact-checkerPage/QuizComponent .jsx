@@ -9,7 +9,7 @@ const QuizContainer = styled.div`
   padding: 40px;
   min-height: 100vh;
   color: #333;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif;
 `;
 
 const StartQuizContainer = styled.div`
@@ -73,6 +73,7 @@ const AnswerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 `;
 
 const AnswerLabel = styled.label`
@@ -80,12 +81,12 @@ const AnswerLabel = styled.label`
   padding: 10px;
   font-size: 18px;
   width: 100%;
-  max-width: 400px;
   margin-bottom: 10px;
   border-radius: 8px;
   color: ${(props) => (props.selected ? 'white' : '#333')};
   cursor: pointer;
   transition: background-color 0.3s ease;
+  min-height: 50px; // Ensure same size
 
   &:hover {
     background-color: ${(props) => (props.selected ? '#388e3c' : '#b2ebf2')};
@@ -99,6 +100,81 @@ const Explanation = styled.p`
   font-size: 16px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const NextButton = styled.button`
+  padding: 12px 20px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 48%; // Adjust the width to fit side by side
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const CheckAnswerButton = styled.button`
+  padding: 12px 20px;
+  background-color: #ff9800;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 48%; // Adjust the width to fit side by side
+
+  &:hover {
+    background-color: #e68a00;
+  }
+`;
+
+const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContent = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+`;
+
+const CloseButton = styled.button`
+  padding: 10px 15px;
+  background-color: #f44336;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+`;
+
 const QuizComponent = () => {
   const [quizStarted, setQuizStarted] = useState(false);
   const [topic, setTopic] = useState('');
@@ -107,6 +183,8 @@ const QuizComponent = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [explanation, setExplanation] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [correctAnswerText, setCorrectAnswerText] = useState(''); // Store correct answer text
 
   // Start the quiz
   const startQuiz = async () => {
@@ -156,12 +234,17 @@ const QuizComponent = () => {
     const isCorrect = index + 1 === correctAnswer;
     const message = isCorrect ? 'Correct Answer!' : 'Incorrect. Try again.';
     setExplanation(message);
+  };
 
-    if (isCorrect) {
-      setTimeout(() => {
-        fetchQuestion();
-      }, 3000);
-    }
+  // Show correct answer in a modal
+  const showCorrectAnswer = () => {
+    setCorrectAnswerText(answers[correctAnswer - 1]); // Store the correct answer
+    setIsModalOpen(true); // Open the modal
+  };
+
+  // Close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -195,21 +278,32 @@ const QuizComponent = () => {
                     value={index}
                     checked={selectedAnswer === index}
                     onChange={() => checkAnswer(index)}
-                    style={{ marginRight: '10px' }}
+                    style={{ display: 'none' }} // Hide the radio input
                   />
                   {answer}
                 </AnswerLabel>
               ))
             ) : (
-              <p>Loading answers...</p>
+              <p>No answers available</p>
             )}
           </AnswerContainer>
-          {explanation && (
-            <Explanation isCorrect={selectedAnswer + 1 === correctAnswer}>
-              {explanation}
-            </Explanation>
-          )}
+          {explanation && <Explanation isCorrect={selectedAnswer === correctAnswer - 1}>{explanation}</Explanation>}
+          <ButtonContainer>
+            <NextButton onClick={fetchQuestion}>Next Question</NextButton>
+            <CheckAnswerButton onClick={showCorrectAnswer}>Check Answer</CheckAnswerButton>
+          </ButtonContainer>
         </QuizContent>
+      )}
+
+      {/* Modal for showing the correct answer */}
+      {isModalOpen && (
+        <ModalBackground>
+          <ModalContent>
+            <h3>Correct Answer</h3>
+            <p>{correctAnswerText}</p>
+            <CloseButton onClick={closeModal}>Close</CloseButton>
+          </ModalContent>
+        </ModalBackground>
       )}
     </QuizContainer>
   );
