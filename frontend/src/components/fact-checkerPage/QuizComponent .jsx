@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 
 // Styled components
@@ -10,8 +8,7 @@ const QuizContainer = styled.div`
   align-items: center;
   padding: 40px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  color: white;
+  color: #333;
   font-family: 'Roboto', sans-serif;
 `;
 
@@ -19,12 +16,13 @@ const StartQuizContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #223a5f;
+  background-color: #ffffff;
   padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
+  text-align: center;
 `;
 
 const Input = styled.input`
@@ -32,25 +30,24 @@ const Input = styled.input`
   margin: 15px 0;
   width: 100%;
   font-size: 18px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f5f5f5;
   color: #333;
 `;
 
 const StartButton = styled.button`
   padding: 12px 20px;
-  background-color: #00c9ff;
-  background-image: linear-gradient(45deg, #00c9ff, #92fe9d);
+  background-color: #4caf50;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   color: white;
   font-size: 18px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  
+  transition: background-color 0.3s ease;
+
   &:hover {
-    background-image: linear-gradient(45deg, #92fe9d, #00c9ff);
+    background-color: #45a049;
   }
 `;
 
@@ -58,17 +55,18 @@ const QuizContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #223a5f;
+  background-color: #ffffff;
   padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   width: 100%;
 `;
 
 const Question = styled.h3`
-  font-size: 22px;
+  font-size: 24px;
   margin-bottom: 20px;
+  color: #333;
 `;
 
 const AnswerContainer = styled.div`
@@ -78,27 +76,26 @@ const AnswerContainer = styled.div`
 `;
 
 const AnswerLabel = styled.label`
-  background-color: ${(props) => (props.selected ? '#00c9ff' : '#1e90ff')};
+  background-color: ${(props) => (props.selected ? '#4caf50' : '#e0f7fa')};
   padding: 10px;
-  font-size: 16px;
+  font-size: 18px;
   width: 100%;
   max-width: 400px;
   margin-bottom: 10px;
-  border-radius: 10px;
-  border: none;
-  color: white;
+  border-radius: 8px;
+  color: ${(props) => (props.selected ? 'white' : '#333')};
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: ${(props) => (props.selected ? '#00a9d4' : '#007acc')};
+    background-color: ${(props) => (props.selected ? '#388e3c' : '#b2ebf2')};
   }
 `;
 
 const Explanation = styled.p`
   margin-top: 20px;
   font-style: italic;
-  color: ${(props) => (props.isCorrect ? 'lightgreen' : 'tomato')};
+  color: ${(props) => (props.isCorrect ? '#4caf50' : '#f44336')};
   font-size: 16px;
 `;
 
@@ -111,10 +108,10 @@ const QuizComponent = () => {
   const [explanation, setExplanation] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState(null);
 
-  // Start the quiz by sending topic to the backend
+  // Start the quiz
   const startQuiz = async () => {
     if (!topic) {
-      toast.error('Please enter a topic');
+      setExplanation('Please enter a topic');
       return;
     }
 
@@ -126,12 +123,10 @@ const QuizComponent = () => {
       });
 
       const data = await response.json();
-      toast.success(data.message);
       setQuizStarted(true);
       fetchQuestion();
     } catch (error) {
-      console.error('Error starting quiz:', error);
-      toast.error('Failed to start quiz');
+      setExplanation('Failed to start quiz');
     }
   };
 
@@ -145,14 +140,13 @@ const QuizComponent = () => {
       const data = await response.json();
 
       // Update state with the data from API response
-      setQuestion(data.question); // Set the question text
-      setAnswers(data.answers); // Set the possible answers
-      setCorrectAnswer(data.correct_answer); // Set the correct answer index
-      setExplanation(''); // Reset explanation
-      setSelectedAnswer(null); // Reset selected answer
+      setQuestion(data.question);
+      setAnswers(data.answers);
+      setCorrectAnswer(data.correct_answer);
+      setExplanation('');
+      setSelectedAnswer(null);
     } catch (error) {
-      console.error('Error fetching question:', error);
-      toast.error('Failed to fetch question');
+      setExplanation('Failed to fetch question');
     }
   };
 
@@ -162,18 +156,16 @@ const QuizComponent = () => {
     const isCorrect = index + 1 === correctAnswer;
     const message = isCorrect ? 'Correct Answer!' : 'Incorrect. Try again.';
     setExplanation(message);
-    toast.info(message);
 
     if (isCorrect) {
       setTimeout(() => {
-        fetchQuestion(); // Fetch the next question after a delay
-      }, 3000); // 3 seconds delay to show the explanation
+        fetchQuestion();
+      }, 3000);
     }
   };
 
   return (
     <QuizContainer>
-      <ToastContainer />
       {!quizStarted ? (
         <StartQuizContainer>
           <h2>Start a Quiz</h2>
@@ -184,6 +176,7 @@ const QuizComponent = () => {
             onChange={(e) => setTopic(e.target.value)}
           />
           <StartButton onClick={startQuiz}>Start Quiz</StartButton>
+          {explanation && <p>{explanation}</p>}
         </StartQuizContainer>
       ) : (
         <QuizContent>
