@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import FactChecker from '../components/fact-checkerPage/factChecker';
+import QuizComponent from '../components/fact-checkerPage/QuizComponent ';
 
 const Wrapper = styled.div`
   margin-top: 20px;
@@ -71,6 +72,20 @@ const VerifyButton = styled.button`
   }
 `;
 
+const Heading = styled.h2`
+  margin: 40px 0 20px; /* Increased top margin */
+  text-align: center;
+  color: #1e90ff; /* Bright color for a modern look */
+  font-size: 24px; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase letters for emphasis */
+  letter-spacing: 1.2px; /* Slightly increased letter spacing */
+  font-family: 'Arial', sans-serif; /* Modern sans-serif font */
+  border-bottom: 2px solid #1e90ff; /* Bottom border for emphasis */
+  padding-bottom: 10px; /* Padding below the text */
+`;
+
+
 const FactCheckerPage = () => {
   const [showPopup, setShowPopup] = useState(false);
 
@@ -105,6 +120,9 @@ const FactCheckerPage = () => {
           </PopupCard>
         </PopupOverlay>
       )}
+
+      <Heading>How educated are you about Politics in Sri Lanka? Try the following quiz</Heading>
+      <QuizComponent />
     </Wrapper>
   );
 };
