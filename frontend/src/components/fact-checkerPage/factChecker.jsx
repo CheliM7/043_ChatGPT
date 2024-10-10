@@ -144,7 +144,7 @@ const AnswerDisplay = ({ fact, isTrue, unknown }) => {
   );
 };
 
-const FactChecker = () => {
+const FactChecker = ({ onFalseOrUnknown }) => {
   const [fact, setFact] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
@@ -186,8 +186,10 @@ const FactChecker = () => {
           setIsTrue(true);
         } else if (answer === 'False') {
           setIsTrue(false);
+          onFalseOrUnknown(); // Trigger callback for False or Unknown
         } else {
-          setUnknown(true); // Handle the case for unknown response
+          setUnknown(true);
+          onFalseOrUnknown(); // Trigger callback for False or Unknown
         }
       } else {
         setResult('Error occurred while checking the fact. Please try again.');

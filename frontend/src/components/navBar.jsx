@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button, Tooltip, Box, useMediaQuery } from '@mui/material';
-import { AccountCircle, Description, Poll, CheckCircle } from '@mui/icons-material'; // Import CheckCircle icon
+import { AppBar, Toolbar, Typography, Button, Tooltip, Box, IconButton as MUIIconButton, Drawer, List, ListItem, ListItemText, useMediaQuery } from '@mui/material';
+import { AccountCircle, Description, Poll, CheckCircle, Menu as MenuIcon } from '@mui/icons-material'; // Import Menu icon
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
@@ -51,8 +51,7 @@ const RightSection = styled(Box)(({ theme }) => ({
   flexDirection: 'row',
   justifyContent: 'flex-end',
   [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    gap: '8px',
+    display: 'none',
   },
 }));
 
@@ -82,6 +81,7 @@ const IconButton = styled(Box)(({ theme }) => ({
 
 const NavBar = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -90,6 +90,31 @@ const NavBar = () => {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const toggleDrawer = (open) => {
+    setDrawerOpen(open);
+  };
+
+  const drawerContent = (
+    <List>
+      <ListItem button component={Link} to="/candidates">
+        <AccountCircle />
+        <ListItemText primary="Candidates" />
+      </ListItem>
+      <ListItem button component={Link} to="/manifestos">
+        <Description />
+        <ListItemText primary="Manifestos" />
+      </ListItem>
+      <ListItem button component={Link} to="/factchecker">
+        <CheckCircle />
+        <ListItemText primary="Fact Checker" />
+      </ListItem>
+      <ListItem button component={Link} to="/vote">
+        <Poll />
+        <ListItemText primary="Vote" />
+      </ListItem>
+    </List>
+  );
 
   return (
     <NavBarContainer position="static">
@@ -106,43 +131,53 @@ const NavBar = () => {
           </DateInfo>
         </ElectionInfo>
 
-        <RightSection>
-          <Tooltip title="View Candidates" arrow>
-            <Link to="/candidates" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <IconButton>
-                <AccountCircle sx={{ fontSize: '1.8rem' }} /> {/* Reduced icon size */}
-                <Typography variant="body1">Candidates</Typography>
-              </IconButton>
-            </Link>
-          </Tooltip>
+        {!isSmallScreen ? (
+          <RightSection>
+            <Tooltip title="View Candidates" arrow>
+              <Link to="/candidates" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <IconButton>
+                  <AccountCircle sx={{ fontSize: '1.8rem' }} />
+                  <Typography variant="body1">Candidates</Typography>
+                </IconButton>
+              </Link>
+            </Tooltip>
 
-          <Tooltip title="Read Manifestos" arrow>
-            <Link to="/manifestos" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <IconButton>
-                <Description sx={{ fontSize: '1.8rem' }} /> {/* Reduced icon size */}
-                <Typography variant="body1">Manifestos</Typography>
-              </IconButton>
-            </Link>
-          </Tooltip>
+            <Tooltip title="Read Manifestos" arrow>
+              <Link to="/manifestos" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <IconButton>
+                  <Description sx={{ fontSize: '1.8rem' }} />
+                  <Typography variant="body1">Manifestos</Typography>
+                </IconButton>
+              </Link>
+            </Tooltip>
 
-          {/* Fact Checker */}
-          <Tooltip title="Check Facts" arrow>
-            <Link to="/factchecker" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <IconButton>
-                <CheckCircle sx={{ fontSize: '1.8rem' }} /> {/* CheckCircle icon */}
-                <Typography variant="body1">Fact Checker</Typography>
-              </IconButton>
-            </Link>
-          </Tooltip>
+            <Tooltip title="Check Facts" arrow>
+              <Link to="/factchecker" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <IconButton>
+                  <CheckCircle sx={{ fontSize: '1.8rem' }} />
+                  <Typography variant="body1">Fact Checker</Typography>
+                </IconButton>
+              </Link>
+            </Tooltip>
 
-          <Tooltip title="Cast Your Vote in our Poll" arrow>
-            <Link to="/vote" style={{ textDecoration: 'none' }}>
-              <VoteButton variant="contained" startIcon={<Poll />}>
-                VOTE
-              </VoteButton>
-            </Link>
-          </Tooltip>
-        </RightSection>
+            <Tooltip title="Cast Your Vote in our Poll" arrow>
+              <Link to="/vote" style={{ textDecoration: 'none' }}>
+                <VoteButton variant="contained" startIcon={<Poll />}>
+                  VOTE
+                </VoteButton>
+              </Link>
+            </Tooltip>
+          </RightSection>
+        ) : (
+          <>
+            <MUIIconButton onClick={() => toggleDrawer(true)} color="inherit">
+              <MenuIcon />
+            </MUIIconButton>
+            <Drawer anchor="right" open={drawerOpen} onClose={() => toggleDrawer(false)}>
+              {drawerContent}
+            </Drawer>
+          </>
+        )}
       </ToolbarStyled>
     </NavBarContainer>
   );
