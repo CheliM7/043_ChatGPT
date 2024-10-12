@@ -177,7 +177,28 @@ const ChatHistory = styled.div`
   flex: 1;
   border-radius: 0 0 15px 15px;
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.05);
+
+  /* Custom scrollbar styles */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #4a1f1a; /* Scrollbar thumb color */
+    border-radius: 10px;
+    border: 2px solid #f1f1f1; /* Adds space around the scrollbar thumb */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #8b0000; /* Darker color on hover */
+  }
 `;
+
 
 const ChatMessage = styled.div`
   padding: 15px;
