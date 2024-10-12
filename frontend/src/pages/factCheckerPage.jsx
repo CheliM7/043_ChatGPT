@@ -4,7 +4,7 @@ import FactChecker from '../components/fact-checkerPage/factChecker';
 import QuizComponent from '../components/fact-checkerPage/QuizComponent ';
 
 const Wrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 60px;
 `;
 
 const PopupOverlay = styled.div`
@@ -120,8 +120,8 @@ const FactCheckerPage = () => {
           </PopupCard>
         </PopupOverlay>
       )}
-
-      <Heading>How educated are you about Politics in Sri Lanka? Try the following quiz</Heading>
+{/* 
+      <Heading>How educated are you about Politics in Sri Lanka? Try the following quiz</Heading> */}
       <QuizComponent />
     </Wrapper>
   );
